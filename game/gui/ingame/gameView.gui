@@ -1,4 +1,4 @@
-new GameTSCtrl(PlayGui) {
+new GameTSCtrl(GameView) {
    isContainer = "1";
    profile = "GuiContentProfile";
    horizSizing = "right";
