@@ -12,3 +12,7 @@ My goals are:
 
 [initial announcement]: http://www.garagegames.com/community/blogs/view/22869
 [wiki page]: http://torque3d.wikidot.com/communityproject:7dfps-template
+
+## Credits
+
+ * [Basic title font](http://www.dafont.com/basic-title-font.font)
