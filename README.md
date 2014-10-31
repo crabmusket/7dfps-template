@@ -9,6 +9,8 @@ My goals are:
  * A simple flat-shaded/toon art style
  * A library of example weapons
  * Simple AI
+ * Vehicles
+ * Full controller support
 
 [initial announcement]: http://www.garagegames.com/community/blogs/view/22869
 [wiki page]: http://torque3d.wikidot.com/communityproject:7dfps-template
