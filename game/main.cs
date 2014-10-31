@@ -8,8 +8,10 @@ new EventManager(GameEvents) {
 GameEvents.registerEvent(EvtStart);
 GameEvents.registerEvent(EvtExit);
 
-function onExit() {
-   GameEvents.postEvent(EvtExit);
+GameEvents.subscribe(GameEvents, EvtExit);
+function GameEvents::onEvtExit(%this) {
+   // Defer quit till after all events have been handled.
+   schedule(1, 0, quit);
 }
 
 // Miscellaneous setup.

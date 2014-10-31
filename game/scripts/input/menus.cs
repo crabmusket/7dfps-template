@@ -12,3 +12,4 @@ InputEvents.registerEvent(EvtEscape);
 %escape = "InputEvents.postEvent(EvtEscape);";
 MenuActionMap.bindCmd(keyboard, escape, %escape, "");
 MenuActionMap.bindCmd(gamepad, btn_back, %escape, "");
+MenuActionMap.bindCmd(gamepad, btn_b, %escape, "");

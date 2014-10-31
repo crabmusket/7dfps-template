@@ -10,6 +10,7 @@ new ScriptMsgListener(ClientState) {
    transition[logos, escape] = mainMenu;
    transition[logos, advance] = mainMenu;
    transition[logos, noMoreLogos] = mainMenu;
+   transition[mainMenu, escape] = quit;
 };
 
 GameEvents.subscribe(ClientState, EvtStart);
@@ -35,4 +36,8 @@ function ClientState::enterLogos(%this) {
 function ClientState::enterMainMenu(%this) {
    Canvas.setContent(MainMenuGui);
    MenuActionMap.push();
+}
+
+function ClientState::enterQuit(%this) {
+   GameEvents.postEvent(EvtExit);
 }
