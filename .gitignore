@@ -1,0 +1,16 @@
+# Visual studio outputs and user files.
+*.vcxproj*
+*.vcproj*
+*.exe
+*.dll
+*.exp
+*.ilk
+*.lib
+*.sln
+*.suo
+*.sdf
+*.opensdf
+buildFiles/Link
+
+# Cached/compiled art files.
+*.cached.dts
