@@ -1,4 +1,4 @@
-new GuiControl(LogoGui) {
+new GuiControl(ChooseServerGui) {
    profile = BackgroundProfile;
    horizSizing = "width";
    vertSizing = "height";
@@ -9,6 +9,7 @@ new GuiControl(LogoGui) {
 
    new GuiTextCtrl() {
       profile = TitleProfile;
-      text = "FEED ME";
+      text = "CHOOSE SERVER";
+      extent = "250 30";
    };
 };

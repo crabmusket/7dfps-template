@@ -33,6 +33,7 @@ new GuiControl(MainMenuGui) {
             profile = TitleProfile;
             text = "PLAY";
             useMouseEvents = true;
+            command = "GuiEvents.postEvent(EvtNewGame);";
          };
 
          new GuiButtonCtrl() {
@@ -40,6 +41,7 @@ new GuiControl(MainMenuGui) {
             profile = TitleProfile;
             text = "JOIN";
             useMouseEvents = true;
+            command = "GuiEvents.postEvent(EvtJoinGame);";
          };
 
          new GuiButtonCtrl() {
@@ -47,13 +49,14 @@ new GuiControl(MainMenuGui) {
             profile = TitleProfile;
             text = "EXIT";
             useMouseEvents = true;
+            command = "GameEvents.postEvent(EvtExit);";
          };
       };
    };
 };
 
 function MainMenuGui::onWake(%this) {
-   %this.setSelected(0);
+   %this.updateCursor();
 }
 
 function MainMenuGui::setSelected(%this, %index) {
@@ -62,6 +65,11 @@ function MainMenuGui::setSelected(%this, %index) {
       %buttons.selected = %index;
       %this.updateCursor();
    }
+}
+
+function MainMenuGui::getSelected(%this) {
+   %buttons = %this-->Buttons;
+   return %buttons.getObject(%buttons.selected);
 }
 
 function MainMenuGui::updateCursor(%this) {
@@ -76,22 +84,17 @@ function MainMenuGui::updateCursor(%this) {
 
 InputEvents.subscribe(MainMenuGui, EvtNext);
 function MainMenuGui::onEvtNext(%this) {
-   %buttons = %this-->Buttons;
-   %buttonCount = %buttons.getCount();
-   if (%buttons.selected < %buttonCount-1) {
-      %buttons.selected++;
-      %this.updateCursor();
-   }
+   %this.setSelected(%this-->Buttons.selected + 1);
 }
 
 InputEvents.subscribe(MainMenuGui, EvtPrev);
 function MainMenuGui::onEvtPrev(%this) {
-   %buttons = %this-->Buttons;
-   %buttonCount = %buttons.getCount();
-   if (%buttons.selected > 0) {
-      %buttons.selected--;
-      %this.updateCursor();
-   }
+   %this.setSelected(%this-->Buttons.selected - 1);
+}
+
+InputEvents.subscribe(MainMenuGui, EvtAdvance);
+function MainMenuGui::onEvtAdvance(%this) {
+   eval(%this.getSelected().command);
 }
 
 function MainMenuButton::onMouseEnter(%this) {
