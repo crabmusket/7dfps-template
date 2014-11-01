@@ -31,7 +31,7 @@ exec("lib/twillex/main.cs");
 exec("lib/stateMachine/main.cs");
 
 // Load game code.
-exec("scripts/game.cs");
+exec("scripts/main.cs");
 
 // Let the game begin!
 GameEvents.postEvent(EvtStart);

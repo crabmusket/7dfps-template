@@ -17,7 +17,7 @@ new ScriptMsgListener(ClientState) {
    transition[selectServer, back] = mainMenu;
 };
 
-// Load scripts.
+// Load client scripts.
 exec("scripts/input/main.cs");
 exec("gui/main.cs");
 
