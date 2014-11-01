@@ -20,41 +20,57 @@ new GuiControl(MainMenuGui) {
          text = ">";
       };
 
-      new GuiControl([Buttons]) {
-         extent = "500 500";
+      new GuiStackControl([Buttons]) {
+         position = "20 0";
+         stackingType = "Vertical";
+         dynamicSize = true;
+         dynamicNonStackExtent = true;
+         padding = 15;
          selected = 0;
 
-         new GuiTextCtrl() {
+         new GuiButtonCtrl() {
             class = MainMenuButton;
             profile = TitleProfile;
-            position = "20 0";
             text = "PLAY";
+            useMouseEvents = true;
          };
 
-         new GuiTextCtrl() {
+         new GuiButtonCtrl() {
             class = MainMenuButton;
             profile = TitleProfile;
-            position = "20 40";
             text = "JOIN";
+            useMouseEvents = true;
          };
 
-         new GuiTextCtrl() {
+         new GuiButtonCtrl() {
             class = MainMenuButton;
             profile = TitleProfile;
-            position = "20 80";
             text = "EXIT";
+            useMouseEvents = true;
          };
       };
    };
 };
 
 function MainMenuGui::onWake(%this) {
-   %this.updateCursor();
+   %this.setSelected(0);
+}
+
+function MainMenuGui::setSelected(%this, %index) {
+   %buttons = %this-->Buttons;
+   if (%index >= 0 && %index < %buttons.getCount()) {
+      %buttons.selected = %index;
+      %this.updateCursor();
+   }
 }
 
 function MainMenuGui::updateCursor(%this) {
    %buttons = %this-->Buttons;
-   %selectedPos = %buttons.getObject(%buttons.selected).position;
+   %button = %buttons.getObject(%buttons.selected);
+   %selectedPos = VectorSub(
+      %button.position,
+      0 SPC (getWord(%button.extent, 1) * 0.5)
+   );
    %this-->Cursor.position = 0 SPC getWord(%selectedPos, 1);
 }
 
@@ -76,4 +92,8 @@ function MainMenuGui::onEvtPrev(%this) {
       %buttons.selected--;
       %this.updateCursor();
    }
+}
+
+function MainMenuButton::onMouseEnter(%this) {
+   MainMenuGui.setSelected(MainMenuGui-->Buttons.getObjectIndex(%this));
 }
