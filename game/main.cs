@@ -29,6 +29,7 @@ exec("lib/console/main.cs");
 exec("lib/metrics/main.cs");
 exec("lib/twillex/main.cs");
 exec("lib/stateMachine/main.cs");
+exec("lib/argParser/main.cs");
 
 // Load game code.
 exec("scripts/main.cs");
