@@ -10,6 +10,8 @@
        .arg(d, "difficulty");
     
     // Omit argument to parse $Game::argv
-    $args = $parser.parse("-n -q --difficulty hard");
+    $args = $parser.parse("-n --difficulty hard -q");
 
-    echo($args.difficulty);
+    echo($args.q);                        // echoes "___present___"
+    echo($args.getFieldValue("no-warn")); // echoes "___present___"
+    echo($args.difficulty);               // echoes "hard"
