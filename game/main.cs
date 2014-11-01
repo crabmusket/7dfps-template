@@ -1,4 +1,4 @@
-aisplaySplashWindow("gui/splash.bmp");
+displaySplashWindow("gui/splash.bmp");
 
 // Events for game start and exit.
 new EventManager(GameEvents) {
@@ -10,9 +10,10 @@ GameEvents.registerEvent(EvtExit);
 
 GameEvents.subscribe(GameEvents, EvtExit);
 function GameEvents::onEvtExit(%this) {
-   // Defer quit till after all events have been handled.
+   // Defer quit till after all event handlers have had a chance to run.
    schedule(1, 0, quit);
 }
+GlobalActionMap.bindCmd(keyboard, "alt f4", "GameEvents.postEvent(EvtExit);");
 
 // Miscellaneous setup.
 $Gui::fontCacheDirectory = "gui/fontCache";

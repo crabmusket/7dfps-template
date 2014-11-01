@@ -9,6 +9,6 @@ new GuiControl(LogoGui) {
 
    new GuiTextCtrl() {
       profile = TitleProfile;
-      text = "feed me";
+      text = "FEED ME";
    };
 };

@@ -1,11 +1,8 @@
-// Load scripts.
-exec("scripts/input/main.cs");
-exec("gui/main.cs");
-
 // Client game state.
 new ScriptMsgListener(ClientState) {
    class = StateMachine;
    state = null;
+
    transition[null, start] = logos;
    transition[logos, escape] = mainMenu;
    transition[logos, advance] = mainMenu;
@@ -13,6 +10,11 @@ new ScriptMsgListener(ClientState) {
    transition[mainMenu, escape] = quit;
 };
 
+// Load scripts.
+exec("scripts/input/main.cs");
+exec("gui/main.cs");
+
+// Subscribe to events.
 GameEvents.subscribe(ClientState, EvtStart);
 GameEvents.subscribe(ClientState, EvtExit);
 function ClientState::onEvtStart(%this) { %this.onEvent(start); }
