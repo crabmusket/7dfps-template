@@ -10,4 +10,5 @@ exec("./menus/splashscreens.cs");
 exec("./menus/mainMenu.cs");
 exec("./menus/selectLevel.cs");
 exec("./menus/selectServer.cs");
+exec("./menus/loading.cs");
 exec("./ingame/gameView.cs");

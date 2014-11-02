@@ -7,9 +7,18 @@ new GuiControlProfile(TitleProfile : GuiDefaultProfile) {
    fillColorHL = "Black";
 };
 
+new GuiControlProfile(LevelListProfile : TitleProfile) {
+   fontSize = 26;
+};
+
+new GuiControlProfile(LevelListInvertedProfile : LevelListProfile) {
+   fontColor = "Black";
+   fontColorHL = "Black";
+   fillColor = "White";
+   fillColorHL = "White";
+};
+
 new GuiControlProfile(BackgroundProfile : GuiDefaultProfile) {
    fillColor = "Black";
    opaque = true;
-   autoSizeWidth = true;
-   autoSizeHeight = true;
 };

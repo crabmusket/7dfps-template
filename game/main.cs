@@ -7,6 +7,7 @@ new EventManager(GameEvents) {
 
 GameEvents.registerEvent(EvtStart);
 GameEvents.registerEvent(EvtExit);
+GameEvents.registerEvent(EvtParseArgs);
 
 GameEvents.subscribe(GameEvents, EvtExit);
 function GameEvents::onEvtExit(%this) {
@@ -24,5 +25,9 @@ exec("scripts/client.cs");
 exec("scripts/server.cs");
 exec("scripts/localServer.cs");
 
+%parser = ArgParser();
+GameEvents.postEvent(EvtParseArgs, %parser);
+%args = %parser.parse();
+
 // Let the game begin!
-GameEvents.postEvent(EvtStart);
+GameEvents.postEvent(EvtStart, %args);

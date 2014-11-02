@@ -3,7 +3,7 @@ new GuiControl(MainMenuGui) {
    horizSizing = "width";
    vertSizing = "height";
    position = "0 0";
-   extent = "1024 768";
+   extent = "800 400";
    minExtent = "8 8";
    wrap = false;
 
@@ -11,7 +11,7 @@ new GuiControl(MainMenuGui) {
       profile = BackgroundProfile;
       horizSizing = "width";
       vertSizing = "height";
-      position = "205 256";
+      position = "100 200";
       extent = "500 500";
 
       new GuiTextCtrl([Cursor]) {

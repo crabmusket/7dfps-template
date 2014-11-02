@@ -1,4 +1,4 @@
-new GuiControl(SelectServerGui) {
+new GuiControl(LoadingGui) {
    profile = BackgroundProfile;
    horizSizing = "width";
    vertSizing = "height";
@@ -9,7 +9,7 @@ new GuiControl(SelectServerGui) {
 
    new GuiTextCtrl() {
       profile = TitleProfile;
-      text = "CHOOSE SERVER";
+      text = "LOADING";
       extent = "250 30";
    };
 };
