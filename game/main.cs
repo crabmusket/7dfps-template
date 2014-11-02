@@ -1,4 +1,4 @@
-displaySplashWindow("gui/splash.bmp");
+setLogMode(2);
 
 // Events for game start and exit.
 new EventManager(GameEvents) {
@@ -18,21 +18,11 @@ GlobalActionMap.bindCmd(keyboard, "alt f4", "GameEvents.postEvent(EvtExit);");
 // Miscellaneous setup.
 $Gui::fontCacheDirectory = "gui/fontCache";
 
-// Open a window.
-exec("lib/sys/main.cs");
-Sys.init();
-
-// Load libraries.
-exec("lib/net/client.cs");
-exec("lib/net/server.cs");
-exec("lib/console/main.cs");
-exec("lib/metrics/main.cs");
-exec("lib/twillex/main.cs");
-exec("lib/stateMachine/main.cs");
-exec("lib/argParser/main.cs");
-
 // Load game code.
-exec("scripts/main.cs");
+exec("scripts/common.cs");
+exec("scripts/client.cs");
+exec("scripts/server.cs");
+exec("scripts/localServer.cs");
 
 // Let the game begin!
 GameEvents.postEvent(EvtStart);

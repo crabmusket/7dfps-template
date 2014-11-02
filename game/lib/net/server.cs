@@ -2,6 +2,10 @@ new ScriptObject(NetServer) {
    port = 28001;
 };
 
+new EventManager(NetServerEvents) {
+   queue = NetServerEventQueue;
+};
+
 function NetServer::initDedicated(%this) {
    // Open a console window and create a null GFX device since we won't be
    // rendering a usual game canvas.

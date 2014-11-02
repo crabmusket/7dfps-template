@@ -10,6 +10,16 @@ new GuiControl(ChooseLevelGui) {
    new GuiTextCtrl() {
       profile = TitleProfile;
       text = "CHOOSE LEVEL";
+      position = "20 20";
       extent = "250 30";
    };
+
+   new GuiButtonCtrl() {
+      profile = TitleProfile;
+      text = "PLAY";
+      position = "20 70";
+      command = "GuiEvents.postEvent(EvtStartGame);";
+   };
 };
+
+GuiEvents.registerEvent(EvtStartGame);

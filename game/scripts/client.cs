@@ -1,3 +1,9 @@
+displaySplashWindow("gui/splash.bmp");
+
+// Open a window.
+exec("lib/sys/main.cs");
+Sys.init();
+
 // Client game state.
 new ScriptMsgListener(ClientState) {
    class = StateMachine;
@@ -12,14 +18,23 @@ new ScriptMsgListener(ClientState) {
 
    transition[selectLevel, escape] = mainMenu;
    transition[selectLevel, back] = mainMenu;
+   transition[selectLevel, startLoading] = loading;
 
    transition[selectServer, escape] = mainMenu;
    transition[selectServer, back] = mainMenu;
+
+   transition[loading, enterGame] = inGame;
 };
 
 // Load client scripts.
+exec("lib/console/main.cs");
+exec("lib/metrics/main.cs");
+exec("lib/net/client.cs");
+
 exec("scripts/input/main.cs");
 exec("gui/main.cs");
+
+exec("scripts/client/game.cs");
 
 // Subscribe to events.
 GameEvents.subscribe(ClientState, EvtStart);
@@ -34,8 +49,13 @@ function ClientState::onEvtEscape(%this)  { %this.onEvent(escape); }
 
 GuiEvents.subscribe(ClientState, EvtNewGame);
 GuiEvents.subscribe(ClientState, EvtJoinGame);
-function ClientState::onEvtNewGame(%this)  { %this.onEvent(newGame); }
-function ClientState::onEvtJoinGame(%this) { %this.onEvent(joinGame); }
+GuiEvents.subscribe(ClientState, EvtStartLoading);
+function ClientState::onEvtNewGame(%this)      { %this.onEvent(newGame); }
+function ClientState::onEvtJoinGame(%this)     { %this.onEvent(joinGame); }
+function ClientState::onEvtStartLoading(%this) { %this.onEvent(startLoading); }
+
+NetClientEvents.subscribe(ClientState, EvtInitialControlSet);
+function ClientState::onEvtInitialControlSet(%this) { %this.onEvent(enterGame); }
 
 // Callbacks on state changes. This is where most of the logic happens.
 function ClientState::enterSplashscreens(%this) {
@@ -59,4 +79,13 @@ function ClientState::enterSelectLevel(%this) {
 
 function ClientState::enterSelectServer(%this) {
    Canvas.setContent(ChooseServerGui);
+}
+
+function ClientState::enterLoading(%this) {
+}
+
+function ClientState::enterInGame(%this) {
+   MenuActionMap.pop();
+   InGameMap.push();
+   Canvas.setContent(GameViewGui);
 }

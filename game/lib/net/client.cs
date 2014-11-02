@@ -1,5 +1,9 @@
 new ScriptObject(NetClient) {
-   port = 7001;
+   port = 28002;
+};
+
+new EventManager(NetClientEvents) {
+   queue = NetClientEventQueue;
 };
 
 function NetClient::init(%this) {
@@ -29,4 +33,47 @@ function NetClient::disconnect(%this) {
 function NetClient::destroy(%this) {
    %this.disconnect();
    %this.delete();
+}
+
+foreach$ (%evt in DatablocksDone
+              SPC DatablockObjectReceived
+              SPC InitialControlSet
+              SPC ConnectionError
+              SPC ConnectRequestRejected
+              SPC ConnectionDropped
+              SPC ControlObjectChange
+              SPC ConnectionTimedOut
+              SPC ConnectionAccepted
+              SPC ConnectRequestTimedOut) {
+   NetClientEvents.registerEvent(Evt @ %evt);
+}
+
+function GameConnection::initialControlSet(%this) {
+   NetClientEvents.postEvent(EvtInitialControlSet);
+}
+
+function GameConnection::onDatablockObjectReceived(%this, %num, %total) {
+   NetClientEvents.postEvent(EvtDatablockObjectReceived, %num SPC %total);
+}
+
+foreach$ (%evt in ControlObjectChange
+              SPC ConnectionTimedOut
+              SPC ConnectionAccepted
+              SPC ConnectRequestTimedOut) {
+   eval(
+"function GameConnection::on"@%evt@"(%this) {" @
+"   NetClientEvents.postEvent(Evt"@%evt@");" @
+"}"
+   );
+}
+
+foreach$ (%evt in DatablocksDone
+              SPC ConnectionError
+              SPC ConnectRequestRejected
+              SPC ConnectionDropped) {
+   eval(
+"function GameConnection::on"@%evt@"(%this, %data) {" @
+"   NetClientEvents.postEvent(Evt"@%evt@", %data);" @
+"}"
+   );
 }
