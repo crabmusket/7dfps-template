@@ -7,12 +7,6 @@ new GuiControl(InGameMenuGui) {
       extent = "800 200";
       position = "0 200";
 
-      new GuiTextCtrl([Cursor]) {
-         profile = TitleProfile;
-         position = "0 0";
-         text = ">";
-      };
-
       new GuiControl([Buttons]) {
          profile = BackgroundProfile;
          extent = "800 200";
@@ -20,7 +14,7 @@ new GuiControl(InGameMenuGui) {
          new GuiButtonCtrl() {
             class = InGameMenuButton;
             profile = TitleProfile;
-            position = "200 80";
+            position = "190 80";
             extent = "250 50";
             text = "LEAVE GAME";
             command = "GuiEvents.postEvent(EvtLeaveGame);";
@@ -31,19 +25,25 @@ new GuiControl(InGameMenuGui) {
             class = InGameMenuButton;
             profile = TitleProfile;
             position = "450 80";
-            extent = "200 50";
+            extent = "190 50";
             text = "CANCEL";
             command = "InputEvents.postEvent(EvtEscape);";
             useMouseEvents = true;
          };
+      };
+
+      new GuiTextCtrl([Cursor]) {
+         profile = TitleProfile;
+         position = "0 0";
+         text = ">";
       };
    };
 };
 
 function InGameMenuGui::onWake(%this) {
    %this.setSelected(1);
-   InputEvents.subscribe(InGameMenuGui, EvtNext);
-   InputEvents.subscribe(InGameMenuGui, EvtPrev);
+   InputEvents.subscribe(InGameMenuGui, EvtForwards);
+   InputEvents.subscribe(InGameMenuGui, EvtBackwards);
    InputEvents.subscribe(InGameMenuGui, EvtAdvance);
 }
 
@@ -56,9 +56,10 @@ function InGameMenuGui::updateCursor(%this) {
    %button = %buttons.getObject(%buttons.selected);
    %selectedPos = VectorSub(
       %button.position,
-      0 SPC (getWord(%button.extent, 1) * 0.5)
+      20 SPC (getWord(%button.extent, 1) * 0.5)
    );
-   %this-->Cursor.position = 0 SPC getWord(%selectedPos, 1);
+   %this-->Cursor.position = getWords(%selectedPos, 0, 1);
+   error(%this-->Cursor.position);
 }
 
 function InGameMenuGui::setSelected(%this, %index) {
@@ -74,16 +75,18 @@ function InGameMenuGui::getSelected(%this) {
    return %buttons.getObject(%buttons.selected);
 }
 
-function InGameMenuGui::onEvtNext(%this) {
+function InGameMenuGui::onEvtForwards(%this) {
    %this.setSelected(%this-->Buttons.selected + 1);
 }
 
-function InGameMenuGui::onEvtPrev(%this) {
+function InGameMenuGui::onEvtBackwards(%this) {
    %this.setSelected(%this-->Buttons.selected - 1);
 }
 
 function InGameMenuGui::onEvtAdvance(%this) {
-   eval(%this.getSelected().command);
+   // To simulate an actual mouse click, we need to escape the event-handling
+   // loop using a schedule to defer the click.
+   %this.getSelected().schedule(1, performClick);
 }
 
 function InGameMenuButton::onMouseEnter(%this) {

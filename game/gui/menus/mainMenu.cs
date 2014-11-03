@@ -98,7 +98,9 @@ function MainMenuGui::onEvtPrev(%this) {
 }
 
 function MainMenuGui::onEvtAdvance(%this) {
-   eval(%this.getSelected().command);
+   // To simulate an actual mouse click, we need to escape the event-handling
+   // loop using a schedule to defer the click.
+   %this.getSelected().schedule(1, performClick);
 }
 
 function MainMenuButton::onMouseEnter(%this) {

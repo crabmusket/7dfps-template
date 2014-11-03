@@ -10,20 +10,29 @@ exec("lib/console/main.cs");
 exec("lib/metrics/main.cs");
 exec("lib/net/client.cs");
 
+// Load client scripts.
+exec("scripts/input/main.cs");
+exec("gui/main.cs");
+
 // Client game state.
 new ScriptMsgListener(ClientState) {
    class = StateMachine;
    state = null;
 
+   // The null state doesn't do anything - it's just the state before the game
+   // engine has started working. It's useful because when we respond to the
+   // 'start' event, we will get a nice 'enterSplashscreens' callback, which we
+   // wouldn't get if we'd started in the splashscreens state.
+   transition[null, start] = splashscreens;
+
    // When the game starts, the UI first displays splash screens with logos and
    // so on. You can escape from that directly to the menu, but the SplashscreenGui
    // will also send you to the menu with an event when it's finished.
-   transition[null, start] = splashscreens;
    transition[splashscreens, escape] = mainMenu;
    transition[splashscreens, splashscreensDone] = mainMenu;
 
    // The main menu has transitions to other screens. Its 'exit' button directly
-   // posts an EvtExit, so that transition is not part of this state machine.
+   // calls quit(), so its not represented in this state machine.
    transition[mainMenu, newGame] = selectLevel;
    transition[mainMenu, joinGame] = selectServer;
 
@@ -41,6 +50,10 @@ new ScriptMsgListener(ClientState) {
    // There should also be error handlers here.
    transition[loading, enterGame] = inGame;
 
+   // The inGame state represents, well, being in-game, playing. TODO: what to do
+   // about game GUI screens like inventories. To include in this state machine
+   // or not? The answer is probably yes. But those screens may have their own
+   // internal state.
    transition[inGame, escape] = inGameMenu;
 
    // The in-game menu lets you leave the current game, but otherwise will just
@@ -50,21 +63,25 @@ new ScriptMsgListener(ClientState) {
    transition[inGameMenu, escape] = inGame;
    transition[inGameMenu, back] = inGame;
 
-   // This state is not expected to survive long - in fact for local games, it
-   // should happen instantly.
+   // This state is only expected to provide a callback so we can disconnect
+   // from the server and fiddle with the UI and input maps appropriately. It
+   // will receive the disconnected event almost immediately.
    transition[leaveGame, disconnected] = mainMenu;
 };
 
-// Load client scripts.
-exec("scripts/input/main.cs");
-exec("gui/main.cs");
-
-// Subscribe to events.
 GameEvents.subscribe(ClientState, EvtExit);
-function ClientState::onEvtExit(%this) { %this.onEvent(exit); }
+function ClientState::onEvtExit(%this) {
+   // When the game exits, disconnect from any server we're connected to just
+   // in case we're in-game.
+   NetClient.disconnect();
+   // Notify the state machine that we're exiting the application.
+   %this.onEvent(exit);
+}
 
-GameEvents.subscribe(ClientState, EvtStart);
-function ClientState::onEvtStart(%this) {
+GameEvents.subscribe(ClientState, EvtPreStart);
+function ClientState::onEvtPreStart(%this, %parser) {
+   // In EvtPreStart, we set up event listeners for all the events we're
+   // interested in.
    InputEvents.subscribe(ClientState, EvtEscape);
    GuiEvents.subscribe(ClientState, EvtSplashscreensDone);
    GuiEvents.subscribe(ClientState, EvtNewGame);
@@ -73,10 +90,18 @@ function ClientState::onEvtStart(%this) {
    GuiEvents.subscribe(ClientState, EvtLeaveGame);
    NetClientEvents.subscribe(ClientState, EvtInitialControlSet);
    NetClientEvents.subscribe(ClientState, EvtDisconnected);
+}
 
+GameEvents.subscribe(ClientState, EvtStart);
+function ClientState::onEvtStart(%this, %args) {
+   // When the game starts, notify our state machine of the occurrence. The state
+   // enter/leave callbacks will handle the actual logic of making the UI and
+   // input work.
    %this.onEvent(start);
 }
 
+// All these callbacks are called by the events we subscribed to in EvtPreStart.
+// We pass their logic on to our internal state machine by calling onEvent.
 function ClientState::onEvtEscape(%this) { %this.onEvent(escape); }
 function ClientState::onEvtSplashscreensDone(%this) { %this.onEvent(splashscreensDone); }
 function ClientState::onEvtNewGame(%this) { %this.onEvent(newGame); }
@@ -98,10 +123,6 @@ function ClientState::enterMainMenu(%this) {
    Canvas.setContent(MainMenuGui);
 }
 
-function ClientState::enterQuit(%this) {
-   GameEvents.postEvent(EvtExit);
-}
-
 function ClientState::enterSelectLevel(%this) {
    Canvas.setContent(SelectLevelGui);
 }
@@ -120,13 +141,6 @@ function ClientState::enterInGame(%this) {
    Canvas.setContent(GameViewGui);
 }
 
-function ClientState::enterLeaveGame(%this) {
-   Canvas.setContent(LoadingGui);
-   NetClient.disconnect();
-   InGameMap.pop();
-   MenuActionMap.push();
-}
-
 function ClientState::enterInGameMenu(%this) {
    Canvas.pushDialog(InGameMenuGui);
    InGameMap.pop();
@@ -137,4 +151,11 @@ function ClientState::leaveInGameMenu(%this) {
    Canvas.popDialog(InGameMenuGui);
    MenuActionMap.pop();
    InGameMap.push();
+}
+
+function ClientState::enterLeaveGame(%this) {
+   Canvas.setContent(LoadingGui);
+   NetClient.disconnect();
+   InGameMap.pop();
+   MenuActionMap.push();
 }

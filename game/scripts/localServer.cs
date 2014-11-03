@@ -2,17 +2,12 @@ new ScriptMsgListener(LocalServer) {
    chosenLevel = "";
 };
 
-GameEvents.subscribe(LocalServer, EvtStart);
-function LocalServer::onEvtStart(%this) {
+GameEvents.subscribe(LocalServer, EvtPreStart);
+function LocalServer::onEvtPreStart(%this, %parser) {
    GuiEvents.subscribe(LocalServer, EvtSelectLevel);
    GuiEvents.subscribe(LocalServer, EvtStartGame);
    LevelEvents.subscribe(LocalServer, EvtLevelRegistered);
    NetClientEvents.subscribe(LocalServer, EvtDisconnected);
-}
-
-GameEvents.subscribe(LocalServer, EvtExit);
-function LocalServer::onEvtExit(%this) {
-   NetClient.disconnect();
 }
 
 function LocalServer::onEvtSelectLevel(%this, %level) {

@@ -16,7 +16,7 @@ InputEvents.registerEvent(EvtNext);
 // When the game starts, we want to enable all inputs, including controller input.
 // This lets us use all controls during the menu startup sequence.
 GameEvents.subscribe(InputEvents, EvtStart);
-function InputEvents::onEvtStart(%this) {
+function InputEvents::onEvtStart(%this, %args) {
    $enableDirectInput = 1;
    activateDirectInput();
 }

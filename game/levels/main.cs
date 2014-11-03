@@ -39,7 +39,7 @@ function Levels::destroyLevel(%this) {
 }
 
 GameEvents.subscribe(Levels, EvtStart);
-function Levels::onEvtStart(%this) {
+function Levels::onEvtStart(%this, %args) {
    %dirs = getDirectoryList("levels");
    for (%f = 0; %f < getFieldCount(%dirs); %f++) {
       %dir = getField(%dirs, %f);
