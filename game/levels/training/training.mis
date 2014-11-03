@@ -1,6 +1,8 @@
 new SimGroup(LevelGroup) {
    new LevelInfo(TheLevelInfo) {
       canvasClearColor = "CornflowerBlue";
+      levelName = "Training Ground";
+      description = "A little room for you to learn the controls, play around with weapons and items, and maybe even drive a vehicle.";
    };
    new GroundPlane(TheGround) {
       position = "0 0 0";

@@ -89,8 +89,8 @@ function SelectLevelGui::addLevel(%this, %level) {
    %levels.add(new GuiButtonCtrl() {
       class = LevelListButton;
       profile = LevelListProfile;
-      text = %level.title;
-      command = "GuiEvents.postEvent(EvtSelectLevel, \""@%level.title@"\");";
+      text = %level.levelName;
+      command = "GuiEvents.postEvent(EvtSelectLevel, \""@%level.levelName@"\");";
    });
 }
 

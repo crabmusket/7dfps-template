@@ -1,6 +1,8 @@
 new SimGroup(LevelGroup) {
    new LevelInfo(TheLevelInfo) {
       canvasClearColor = "CornflowerBlue";
+      levelName = "Base Camp";
+      description = "These camps are rudimentary campsites on Mount Everest that are used by mountain climbers during their ascent and descent. South Base Camp is used when climbing via the southeast ridge, while North Base Camp is used when climbing via the northeast ridge.";
    };
    new GroundPlane(TheGround) {
       position = "0 0 0";
