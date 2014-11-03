@@ -7,8 +7,12 @@ new EventManager(LevelEvents) {
 };
 LevelEvents.registerEvent(EvtLevelRegistered);
 
+function Levels::getLevel(%this, %title) {
+   return %this.levels.getValue(%this.levels.getIndexFromKey(%title));
+}
+
 function Levels::register(%this, %level) {
-   if (%this.levels.getValue(%this.levels.getIndexFromKey(%level.title)) !$= "") {
+   if (%this.getLevel(%level.title) !$= "") {
       error("Level title '"@%level.title@"' is already taken!");
    } else {
       %this.levels.push_back(%level.title, %level);

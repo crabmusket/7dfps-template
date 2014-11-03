@@ -1,6 +1,6 @@
 new SimGroup(LevelGroup) {
    new LevelInfo(TheLevelInfo) {
-      canvasClearColor = "0 0 0";
+      canvasClearColor = "CornflowerBlue";
    };
    new GroundPlane(TheGround) {
       position = "0 0 0";
@@ -9,7 +9,7 @@ new SimGroup(LevelGroup) {
    new Sun(TheSun) {
       azimuth = 230;
       elevation = 45;
-      color = "1 1 1";
+      color = "White";
       ambient = "0.1 0.1 0.1";
       castShadows = true;
    };

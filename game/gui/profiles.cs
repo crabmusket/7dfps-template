@@ -1,10 +1,14 @@
-new GuiControlProfile(TitleProfile : GuiDefaultProfile) {
-   fontType = "basic title font";
-   fontSize = 36;
+new GuiControlProfile(TextProfile : GuiDefaultProfile) {
+   fontSize = 18;
    fontColor = "White";
    fontColorHL = "White";
    fillColor = "Black";
    fillColorHL = "Black";
+};
+
+new GuiControlProfile(TitleProfile : TextProfile) {
+   fontType = "basic title font";
+   fontSize = 36;
 };
 
 new GuiControlProfile(LevelListProfile : TitleProfile) {
@@ -16,6 +20,11 @@ new GuiControlProfile(LevelListInvertedProfile : LevelListProfile) {
    fontColorHL = "Black";
    fillColor = "White";
    fillColorHL = "White";
+};
+
+new GuiControlProfile(DialogProfile : GuiDefaultProfile) {
+   fillColor = "0 0 0 0";
+   opaque = false;
 };
 
 new GuiControlProfile(BackgroundProfile : GuiDefaultProfile) {

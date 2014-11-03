@@ -2,24 +2,33 @@ new ScriptMsgListener(LocalServer) {
    chosenLevel = "";
 };
 
-GuiEvents.subscribe(LocalServer, EvtSelectLevel);
+GameEvents.subscribe(LocalServer, EvtStart);
+function LocalServer::onEvtStart(%this) {
+   GuiEvents.subscribe(LocalServer, EvtSelectLevel);
+   GuiEvents.subscribe(LocalServer, EvtStartGame);
+   LevelEvents.subscribe(LocalServer, EvtLevelRegistered);
+   NetClientEvents.subscribe(LocalServer, EvtDisconnected);
+}
+
+GameEvents.subscribe(LocalServer, EvtExit);
+function LocalServer::onEvtExit(%this) {
+   NetClient.disconnect();
+}
+
 function LocalServer::onEvtSelectLevel(%this, %level) {
    %this.selectedLevel = %level;
 }
 
-GuiEvents.subscribe(LocalServer, EvtStartGame);
 function LocalServer::onEvtStartGame(%this) {
    Levels.loadLevel(%this.chosenLevel);
    NetClient.connectTo(self);
    GuiEvents.postEvent(EvtStartLoading);
 }
 
-LevelEvents.subscribe(LocalServer, EvtLevelRegistered);
 function LocalServer::onEvtLevelRegistered(%this, %level) {
    SelectLevelGui.addLevel(%level);
 }
 
-GameEvents.subscribe(LocalServer, EvtExit);
-function LocalServer::onEvtExit(%this) {
-   NetClient.disconnect();
+function LocalServer::onEvtDisconnected(%this) {
+   Levels.destroyLevel();
 }

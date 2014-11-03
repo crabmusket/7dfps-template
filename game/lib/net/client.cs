@@ -6,10 +6,6 @@ new EventManager(NetClientEvents) {
    queue = NetClientEventQueue;
 };
 
-function NetClient::init(%this) {
-   return %this;
-}
-
 function NetClient::connectTo(%this, %host, %port) {
    %this.disconnect();
    %this.connection = new GameConnection();
@@ -17,7 +13,9 @@ function NetClient::connectTo(%this, %host, %port) {
    if (%host $= self) {
       %this.connection.connectLocal();
    } else {
+      // Set the local port we connect from.
       setNetPort(%this.port);
+      // Connect to remote host.
       %this.connection.connect(%host @ (%port !$= "" ? (":" @ %port) : ""));
    }
 
@@ -25,15 +23,13 @@ function NetClient::connectTo(%this, %host, %port) {
 }
 
 function NetClient::disconnect(%this) {
-   if(isObject(%this.connection)) {
+   if (isObject(%this.connection)) {
       %this.connection.delete();
+      NetClientEvents.postEvent(EvtDisconnected);
    }
 }
 
-function NetClient::destroy(%this) {
-   %this.disconnect();
-   %this.delete();
-}
+NetClientEvents.registerEvent(EvtDisconnected);
 
 foreach$ (%evt in DatablocksDone
               SPC DatablockObjectReceived

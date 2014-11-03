@@ -1,6 +1,11 @@
 new ScriptMsgListener(ServerState) {
 };
 
+GameEvents.subscribe(ServerState, EvtExit);
+function ServerState::onEvtExit(%this) {
+   deleteDatablocks();
+}
+
 // Load server scripts.
 exec("lib/net/server.cs");
 exec("levels/main.cs");
@@ -17,9 +22,5 @@ function GameConnection::onEnterGame(%this) {
    %camera.setTransform("0 0 2 1 0 0 0");
    %camera.scopeToClient(%this);
    %this.setControlObject(%camera);
-   %this.add(%camera);
+   LevelCleanup.add(%camera);
 }
-
-singleton Material(BlankWhite) {
-   diffuseColor[0] = "White";
-};

@@ -1,24 +1,27 @@
 new ActionMap(MenuActionMap);
 
-InputEvents.registerEvent(EvtAdvance);
 %advance = "InputEvents.postEvent(EvtAdvance);";
 MenuActionMap.bindCmd(keyboard, space, %advance, "");
 MenuActionMap.bindCmd(keyboard, enter, %advance, "");
 MenuActionMap.bindCmd(gamepad, btn_a, %advance, "");
-MenuActionMap.bindCmd(gamepad, dpadr, %advance, "");
 
-InputEvents.registerEvent(EvtEscape);
 %escape = "InputEvents.postEvent(EvtEscape);";
 MenuActionMap.bindCmd(keyboard, escape, %escape, "");
 MenuActionMap.bindCmd(gamepad, btn_back, %escape, "");
 MenuActionMap.bindCmd(gamepad, btn_b, %escape, "");
 
-InputEvents.registerEvent(EvtPrev);
+%forw = "InputEvents.postEvent(EvtForwards);";
+MenuActionMap.bindCmd(keyboard, right, %forw, "");
+MenuActionMap.bindCmd(gamepad, dpadr, %forw, "");
+
+%back = "InputEvents.postEvent(EvtBackwards);";
+MenuActionMap.bindCmd(keyboard, left, %back, "");
+MenuActionMap.bindCmd(gamepad, dpadl, %back, "");
+
 %prev = "InputEvents.postEvent(EvtPrev);";
 MenuActionMap.bindCmd(keyboard, up, %prev, "");
 MenuActionMap.bindCmd(gamepad, dpadu, %prev, "");
 
-InputEvents.registerEvent(EvtNext);
 %next = "InputEvents.postEvent(EvtNext);";
 MenuActionMap.bindCmd(keyboard, down, %next, "");
 MenuActionMap.bindCmd(gamepad, dpadd, %next, "");
@@ -33,10 +36,15 @@ MenuActionMap.latchLX = false;
 function MenuActionMap::directionLatchLX(%this, %val) {
    if (%val > %this.latchUpper && %this.latchLX == false) {
       %this.latchLX = true;
-      InputEvents.postEvent(EvtAdvance);
+      InputEvents.postEvent(EvtForwards);
    }
 
-   if (%val < %this.latchLower && %this.latchLX == true) {
+   if (%val < -%this.latchUpper && %this.latchLX == false) {
+      %this.latchLX = true;
+      InputEvents.postEvent(EvtBack);
+   }
+
+   if (%val > -%this.latchLower && %val < %this.latchLower && %this.latchLX == true) {
       %this.latchLX = false;
    }
 }

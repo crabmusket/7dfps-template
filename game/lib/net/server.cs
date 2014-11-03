@@ -33,11 +33,6 @@ function NetServer::stop(%this) {
    return %this;
 }
 
-function NetServer::destroy(%this) {
-   deleteDatablocks();
-   %this.delete();
-}
-
 // Called when a client is allowed to connect to the game. We start transmitting
 // currently loaded datablocks to the client.
 function GameConnection::onConnect(%this) {

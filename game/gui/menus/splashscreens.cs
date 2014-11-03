@@ -15,7 +15,8 @@ new GuiControl(SplashscreenGui) {
 };
 
 function SplashscreenGui::onWake(%this) {
-   %this.endSchedule = %this.schedule(1000, end);
+   InputEvents.subscribe(%this, EvtAdvance);
+   %this.endSchedule = %this.schedule(2000, end);
 }
 
 function SplashscreenGui::end(%this) {
@@ -28,4 +29,9 @@ function SplashscreenGui::onSleep(%this) {
       cancel(%this.endSchedule);
       %this.endSchedule = "";
    }
+   InputEvents.removeAll(%this);
+}
+
+function SplashscreenGui::onEvtAdvance(%this) {
+   GuiEvents.postEvent(EvtSplashscreensDone);
 }

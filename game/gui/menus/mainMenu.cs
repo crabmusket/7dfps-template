@@ -49,7 +49,7 @@ new GuiControl(MainMenuGui) {
             profile = TitleProfile;
             text = "EXIT";
             useMouseEvents = true;
-            command = "GameEvents.postEvent(EvtExit);";
+            command = "quit();";
          };
       };
    };
@@ -57,6 +57,13 @@ new GuiControl(MainMenuGui) {
 
 function MainMenuGui::onWake(%this) {
    %this.updateCursor();
+   InputEvents.subscribe(MainMenuGui, EvtNext);
+   InputEvents.subscribe(MainMenuGui, EvtPrev);
+   InputEvents.subscribe(MainMenuGui, EvtAdvance);
+}
+
+function MainMenuGui::onSleep(%this) {
+   InputEvents.removeAll(%this);
 }
 
 function MainMenuGui::setSelected(%this, %index) {
@@ -82,17 +89,14 @@ function MainMenuGui::updateCursor(%this) {
    %this-->Cursor.position = 0 SPC getWord(%selectedPos, 1);
 }
 
-InputEvents.subscribe(MainMenuGui, EvtNext);
 function MainMenuGui::onEvtNext(%this) {
    %this.setSelected(%this-->Buttons.selected + 1);
 }
 
-InputEvents.subscribe(MainMenuGui, EvtPrev);
 function MainMenuGui::onEvtPrev(%this) {
    %this.setSelected(%this-->Buttons.selected - 1);
 }
 
-InputEvents.subscribe(MainMenuGui, EvtAdvance);
 function MainMenuGui::onEvtAdvance(%this) {
    eval(%this.getSelected().command);
 }

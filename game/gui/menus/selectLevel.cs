@@ -6,39 +6,82 @@ new GuiControl(SelectLevelGui) {
    extent = "800 600";
    minExtent = "8 8";
    wrap = false;
+   selectedCtrl = "";
 
-   new GuiTextCtrl() {
-      profile = TitleProfile;
-      text = "CHOOSE LEVEL";
-      position = "20 20";
-      extent = "250 30";
+   new GuiControl([LevelSelect]) {
+      position = "100 100";
+      extent = "500 500";
+
+      new GuiTextCtrl() {
+         profile = TitleProfile;
+         text = "CHOOSE LEVEL";
+         position = "20 0";
+         extent = "250 30";
+      };
+
+      new GuiTextCtrl([Cursor]) {
+         profile = TitleProfile;
+         position = "0 0";
+         text = ">";
+      };
+
+      new GuiStackControl([Levels]) {
+         position = "20 100";
+         stackingType = "Vertical";
+         dynamicSize = true;
+         dynamicNonStackExtent = true;
+         padding = 5;
+         extent = "280 480";
+      };
+   };
+
+   new GuiStackControl([LevelInfo]) {
+      position = "440 100";
+      stackingType = "Vertical";
+      dynamicSize = true;
+      dynamicNonStackExtent = true;
+      padding = 15;
+      extent = "300 500";
+
+      new GuiBitmapCtrl([LevelImage]) {
+         profile = BackgroundProfile;
+         extent = "300 200";
+      };
+
+      new GuiMLTextCtrl([LevelDescription]) {
+         profile = TextProfile;
+         extent = "300 300";
+      };
    };
 
    new GuiButtonCtrl() {
       profile = TitleProfile;
       text = "PLAY";
-      position = "20 70";
+      position = "600 500";
+      horizSizing = Left;
+      vertSizing = Top;
       command = "GuiEvents.postEvent(EvtStartGame);";
-   };
-
-   new GuiStackControl([Levels]) {
-      position = "20 120";
-      stackingType = "Vertical";
-      dynamicSize = true;
-      dynamicNonStackExtent = true;
-      padding = 5;
-      extent = "360 480";
    };
 };
 
-GuiEvents.registerEvent(EvtStartGame);
-GuiEvents.registerEvent(EvtSelectLevel);
-
 function SelectLevelGui::onWake(%this) {
+   GuiEvents.subscribe(%this, EvtSelectLevel);
    %levels = %this-->Levels;
    if (%levels.getCount() > 0) {
       GuiEvents.postEvent(EvtSelectLevel, %levels.getObject(0).text);
    }
+}
+
+function SelectLevelGui::onEvtSelectLevel(%this, %title) {
+   %level = Levels.getLevel(%title);
+   if (isObject(%level)) {
+      %this-->LevelImage.setBitmap(%level.image);
+      %this-->LevelDescription.setText(%level.description);
+   }
+}
+
+function SelectLevelGui::onSleep(%this) {
+   GuiEvents.removeAll(%this);
 }
 
 function SelectLevelGui::addLevel(%this, %level) {
@@ -51,12 +94,14 @@ function SelectLevelGui::addLevel(%this, %level) {
    });
 }
 
-function LevelListButton::onAdd(%this) {
+function LevelListButton::onWake(%this) {
    GuiEvents.subscribe(%this, EvtSelectLevel);
 }
-
-function LevelListButton::onEvtSelectLevel(%this, %level) {
-   if (%this.text $= %level) {
+function LevelListButton::onSleep(%this) {
+   GuiEvents.removeAll(%this);
+}
+function LevelListButton::onEvtSelectLevel(%this, %title) {
+   if (%this.text $= %title) {
       %this.profile = LevelListInvertedProfile;
    } else {
       %this.profile = LevelListProfile;
