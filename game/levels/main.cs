@@ -107,6 +107,7 @@ function Levels::getLevelInfo(%this, %filename) {
       %obj = new ScriptObject() {
          levelName = %levelInfoObj.levelName;
          description = %levelInfoObj.description;
+         sortOrder = %levelInfoObj.sortOrder;
       };
       %levelInfoObj.delete();
       return %obj;
