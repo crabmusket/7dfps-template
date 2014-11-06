@@ -11,8 +11,9 @@ exec("lib/metrics/main.cs");
 exec("lib/net/client.cs");
 
 // Load client scripts.
-exec("scripts/input/main.cs");
 exec("gui/main.cs");
+exec("./input/main.cs");
+exec("./client/fx.cs");
 
 // Client game state.
 new ScriptMsgListener(ClientState) {
