@@ -39,3 +39,17 @@ Finally, you can call `query` with no parameters, in which case, upon query comp
 
 ## Usage - servers
 
+To register a server with the master, set the location and URI you expect, as well as the update period, and fire when ready!
+
+    HTTPMaster.masterLocation = "www.mygame.com:80";
+    HTTPMaster.gameUpdateURI = "/registerServer";
+    HTTPMaster.heartbeatPeriod = 60; // seconds
+    HTTPMaster.startHeartbeat();
+    
+    // And, eventually,
+    HTTPMaster.stopHeartbeat();
+
+## Custom information
+
+This solution doesn't yet let you send or query custom information about each server.
+Watch this space!
