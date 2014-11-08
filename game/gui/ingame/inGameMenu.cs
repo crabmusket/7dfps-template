@@ -15,7 +15,7 @@ new GuiControl(InGameMenuGui) {
             class = InGameMenuButton;
             profile = TitleProfile;
             position = "190 80";
-            extent = "250 50";
+            extent = "250 30";
             text = "LEAVE GAME";
             command = "GuiEvents.postEvent(EvtLeaveGame);";
             useMouseEvents = true;
@@ -25,7 +25,7 @@ new GuiControl(InGameMenuGui) {
             class = InGameMenuButton;
             profile = TitleProfile;
             position = "450 80";
-            extent = "190 50";
+            extent = "190 30";
             text = "CANCEL";
             command = "InputEvents.postEvent(EvtEscape);";
             useMouseEvents = true;
@@ -34,7 +34,6 @@ new GuiControl(InGameMenuGui) {
 
       new GuiTextCtrl([Cursor]) {
          profile = TitleProfile;
-         position = "0 0";
          text = ">";
       };
    };
