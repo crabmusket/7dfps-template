@@ -1,4 +1,4 @@
-new SimGroup(LevelGroup) {
+new SimGroup(MissionGroup) {
    new LevelInfo(TheLevelInfo) {
       canvasClearColor = "CornflowerBlue";
       levelName = "Training Ground";

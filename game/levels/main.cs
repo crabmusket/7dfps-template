@@ -20,7 +20,7 @@ function Levels::loadLevel(%this, %title) {
    %levelInfo = %this.levels.getValue(%title);
    if (isObject(%levelInfo)) {
       exec(%levelInfo.file);
-      new SimGroup(LevelCleanup);
+      new SimGroup(MissionCleanup);
       LevelEvents.postEvent(EvtLevelLoaded);
    }
 }
@@ -31,11 +31,11 @@ function Levels::onEvtExit(%this) {
 }
 
 function Levels::destroyLevel(%this) {
-   if (isObject(LevelGroup)) {
-      LevelGroup.delete();
+   if (isObject(MissionGroup)) {
+      MissionGroup.delete();
    }
-   if (isObject(LevelCleanup)) {
-      LevelCleanup.delete();
+   if (isObject(MissionCleanup)) {
+      MissionCleanup.delete();
    }
 }
 

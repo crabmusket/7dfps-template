@@ -46,6 +46,7 @@ exec("scripts/common.cs");
 exec("scripts/client.cs");
 exec("scripts/server.cs");
 exec("scripts/localServer.cs");
+exec("tools/main.cs");
 
 // Create an argument parser to read command-line args.
 %parser = ArgParser();

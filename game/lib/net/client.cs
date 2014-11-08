@@ -8,7 +8,7 @@ new EventManager(NetClientEvents) {
 
 function NetClient::connectTo(%this, %host, %port) {
    %this.disconnect();
-   %this.connection = new GameConnection();
+   %this.connection = new GameConnection(ServerConnection);
 
    if (%host $= self) {
       %this.connection.connectLocal();

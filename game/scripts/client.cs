@@ -83,14 +83,14 @@ GameEvents.subscribe(ClientState, EvtPreStart);
 function ClientState::onEvtPreStart(%this, %parser) {
    // In EvtPreStart, we set up event listeners for all the events we're
    // interested in.
-   InputEvents.subscribe(ClientState, EvtEscape);
-   GuiEvents.subscribe(ClientState, EvtSplashscreensDone);
-   GuiEvents.subscribe(ClientState, EvtNewGame);
-   GuiEvents.subscribe(ClientState, EvtJoinGame);
-   GuiEvents.subscribe(ClientState, EvtStartGame);
-   GuiEvents.subscribe(ClientState, EvtLeaveGame);
-   NetClientEvents.subscribe(ClientState, EvtInitialControlSet);
-   NetClientEvents.subscribe(ClientState, EvtDisconnected);
+   InputEvents.subscribe(%this, EvtEscape);
+   GuiEvents.subscribe(%this, EvtSplashscreensDone);
+   GuiEvents.subscribe(%this, EvtNewGame);
+   GuiEvents.subscribe(%this, EvtJoinGame);
+   GuiEvents.subscribe(%this, EvtStartGame);
+   GuiEvents.subscribe(%this, EvtLeaveGame);
+   NetClientEvents.subscribe(%this, EvtInitialControlSet);
+   NetClientEvents.subscribe(%this, EvtDisconnected);
 }
 
 GameEvents.subscribe(ClientState, EvtStart);

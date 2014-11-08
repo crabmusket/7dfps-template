@@ -22,5 +22,6 @@ function GameConnection::onEnterGame(%this) {
    %camera.setTransform("0 0 2 1 0 0 0");
    %camera.scopeToClient(%this);
    %this.setControlObject(%camera);
-   LevelCleanup.add(%camera);
+   %this.camera = %camera;
+   %this.add(%camera);
 }
