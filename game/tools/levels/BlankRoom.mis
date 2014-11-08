@@ -1,0 +1,64 @@
+//--- OBJECT WRITE BEGIN ---
+new SimGroup(MissionGroup) {
+   new LevelInfo(TheLevelInfo) {
+      canSaveDynamicFields = "1";
+      description = "An empty room ready to be populated with Torque objects.";
+      levelName = "Empty Room";
+   };
+   new GroundPlane(TheGround) {
+      squareSize = "128";
+      scaleU = "1";
+      scaleV = "1";
+      Material = "BlankWhite";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+      position = "0 0 0";
+   };
+   new ScatterSky(Sky) {
+      skyBrightness = "25";
+      sunSize = "1";
+      colorizeAmount = "0";
+      colorize = "0 0 0 1";
+      rayleighScattering = "0.0035";
+      sunScale = "1 1 1 1";
+      ambientScale = "0.368627 0.368627 0.368627 0.815686";
+      fogScale = "1 1 1 1";
+      exposure = "1";
+      azimuth = "0";
+      elevation = "35";
+      moonAzimuth = "0";
+      moonElevation = "45";
+      castShadows = "1";
+      brightness = "1";
+      flareScale = "1";
+      nightColor = "0.0196078 0.0117647 0.109804 1";
+      nightFogColor = "0.0196078 0.0117647 0.109804 1";
+      moonEnabled = "1";
+      moonMat = "Moon_Glow_Mat";
+      moonScale = "0.2";
+      moonLightColor = "0.192157 0.192157 0.192157 1";
+      useNightCubemap = "1";
+      nightCubemap = "NightCubemap";
+      attenuationRatio = "0 1 1";
+      shadowType = "PSSM";
+      texSize = "512";
+      overDarkFactor = "2000 1000 500 100";
+      shadowDistance = "400";
+      shadowSoftness = "0.15";
+      numSplits = "4";
+      logWeight = "0.91";
+      fadeStartDistance = "0";
+      lastSplitTerrainOnly = "0";
+      representedInLightmap = "0";
+      shadowDarkenColor = "0 0 0 -1";
+      includeLightmappedGeometryInShadow = "0";
+      position = "18.5679 2.41734 -12.5811";
+      rotation = "1 0 0 0";
+      scale = "1 1 1";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+      mieScattering = "0.0045";
+   };
+};
+//--- OBJECT WRITE END ---
+
