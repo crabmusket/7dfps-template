@@ -103,6 +103,7 @@ function Levels::getLevelInfo(%this, %filename) {
          %line = trim(%file.readLine());
          if (startsWith(%line, "new LevelInfo(")) {
             %inInfoBlock = true;
+            %line = strReplace(%line, "new LevelInfo", "new ScriptObject");
          } else if (%inInfoBlock && %line $= "};") {
             %inInfoBlock = false;
             %levelInfoStr = %levelInfoStr SPC %line;
