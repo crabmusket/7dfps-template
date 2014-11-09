@@ -1,4 +1,5 @@
 exec("./postFx/toonEdges.cs");
+exec("./postFx/glow.cs");
 
 new ScriptMsgListener(PostFX) {
 };
@@ -11,8 +12,10 @@ function PostFX::onEvtPreStart(%this, %parser) {
 
 function PostFX::onEvtInitialControlSet(%this) {
    ToonEdgesFx.enable();
+   GlowFx.enable();
 }
 
 function PostFX::onEvtDisconnected(%this) {
    ToonEdgesFx.disable();
+   GlowFx.disable();
 }
