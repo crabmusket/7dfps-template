@@ -4,6 +4,7 @@ exec("levels/main.cs");
 
 // Materials.
 exec("art/materials.cs");
+exec("art/structures/materials.cs");
 exec("art/weapons/machinegun/materials.cs");
 
 // Datablocks and associated scripts.

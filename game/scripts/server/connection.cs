@@ -5,6 +5,7 @@ function GameConnection::onConnectRequest(%this, %addr) {
 
 function GameConnection::onEnterGame(%this) {
    %this.state = new ScriptMsgListener() {
+      connection = %this;
       class = ClientConnectionState;
       superclass = StateMachine;
       state = null;
@@ -16,10 +17,9 @@ function GameConnection::onEnterGame(%this) {
 
    %camera = new Camera() {
       datablock = ObserverCam;
+      position = "0 0 2";
    };
-   %camera.setTransform("0 0 2 1 0 0 0");
    %camera.scopeToClient(%this);
-   %this.setControlObject(%camera);
    %this.camera = %camera;
    %this.add(%camera);
 
@@ -27,6 +27,7 @@ function GameConnection::onEnterGame(%this) {
 }
 
 function ClientConnectionState::enterObserving(%this) {
+   %this.connection.setControlObject(%this.connection.camera);
 }
 
 function ClientConnectionState::enterPlaying(%this) {
