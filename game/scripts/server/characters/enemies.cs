@@ -1,3 +1,3 @@
 datablock PlayerData(EnemySoldier) {
-   shapeFile = "art/shapes/characters/soldier.dae";
+   shapeFile = "art/characters/soldier.dae";
 };
