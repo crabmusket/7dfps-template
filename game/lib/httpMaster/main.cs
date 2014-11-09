@@ -2,7 +2,7 @@ new ScriptObject(HTTPMaster) {
    masterLocation = "localhost:3000";
    gameListURI = "/games";
    gameUpdateURI = "/games";
-   heartbeatPeriod = 60;
+   heartbeatPeriod = 30;
 };
 
 new EventManager(HTTPMasterEvents) {
