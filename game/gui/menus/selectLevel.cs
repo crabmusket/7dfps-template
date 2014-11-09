@@ -140,7 +140,6 @@ function SelectLevelGui::onEvtNext(%this) {
    } else {
       %this.cursorToLevel(%levels.selected + 1);
    }
-   error(next SPC %levels.selected);
 }
 
 function SelectLevelGui::onEvtPrev(%this) {
@@ -150,7 +149,6 @@ function SelectLevelGui::onEvtPrev(%this) {
    } else if (%this-->PlayCursor.visible) {
       %this.cursorToLevel(%levels.selected);
    }
-   error(prev SPC %levels.selected);
 }
 
 function SelectLevelGui::onEvtForwards(%this) {

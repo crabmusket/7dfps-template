@@ -49,6 +49,7 @@ exec("scripts/localServer.cs");
 exec("tools/main.cs");
 
 // Create an argument parser to read command-line args.
+exec("lib/argParser/main.cs");
 %parser = ArgParser();
 GameEvents.postEvent(EvtPreStart, %parser);
 %args = %parser.parse();
