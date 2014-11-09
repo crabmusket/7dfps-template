@@ -18,5 +18,5 @@ new GameTSCtrl(GameViewGui) {
    forceFOV = false;
    enabled = true;
    helpTag = false;
-   noCursor = false;
+   noCursor = true;
 };
