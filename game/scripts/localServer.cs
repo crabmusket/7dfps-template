@@ -1,5 +1,5 @@
 new ScriptMsgListener(LocalServer) {
-   chosenLevel = "";
+   selectedLevel = "";
 };
 
 GameEvents.subscribe(LocalServer, EvtPreStart);

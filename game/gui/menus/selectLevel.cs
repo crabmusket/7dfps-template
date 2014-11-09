@@ -186,6 +186,7 @@ function SelectLevelGui::addLevel(%this, %level) {
       text = %level.levelName;
       command = "GuiEvents.postEvent(EvtSelectLevel, \""@%level.levelName@"\");";
       useMouseEvents = true;
+      sortOrder = %level.sortOrder;
    });
 }
 
