@@ -2,6 +2,7 @@ displaySplashWindow("gui/splash.bmp");
 
 // Miscellaneous setup.
 $Gui::fontCacheDirectory = "gui/fontCache";
+$Pref::Video::Mode = "1024 768 false 32 60 0";
 
 // Load libraries.
 exec("lib/sys/main.cs");

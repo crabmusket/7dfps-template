@@ -41,7 +41,6 @@ $pref::Video::unavailableTexturePath = "art/images/unavailable.png";
 $pref::Video::warningTexturePath = "art/images/warnMat.dds";
 
 $pref::Video::disableVerticalSync = 1;
-$pref::Video::mode = "800 600 false 32 60 4";
 $pref::Video::defaultFenceCount = 0;
 
 // This disables the hardware FSAA/MSAA so that we depend completely on the FXAA
