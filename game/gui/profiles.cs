@@ -1,3 +1,9 @@
+new GuiControlProfile(InvisibleProfile : GuiDefaultProfile) {
+   fillColor = "0 0 0 0";
+   opaque = false;
+   modal = false;
+};
+
 new GuiControlProfile(TextProfile : GuiDefaultProfile) {
    fontSize = 18;
    fontColor = "White";

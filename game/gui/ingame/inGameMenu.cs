@@ -6,10 +6,13 @@ new GuiControl(InGameMenuGui) {
       profile = BackgroundProfile;
       extent = "800 200";
       position = "0 200";
+      horizSizing = Relative;
+      vertSizing = Center;
 
       new GuiControl([Buttons]) {
          profile = BackgroundProfile;
          extent = "800 200";
+         horizSizing = Center;
 
          new GuiButtonCtrl() {
             class = InGameMenuButton;
@@ -32,9 +35,15 @@ new GuiControl(InGameMenuGui) {
          };
       };
 
-      new GuiTextCtrl([Cursor]) {
-         profile = TitleProfile;
-         text = ">";
+      new GuiControl() {
+         profile = InvisibleProfile;
+         extent = "800 200";
+         horizSizing = Center;
+
+         new GuiTextCtrl([Cursor]) {
+            profile = TitleProfile;
+            text = ">";
+         };
       };
    };
 };
@@ -58,7 +67,6 @@ function InGameMenuGui::updateCursor(%this) {
       20 SPC (getWord(%button.extent, 1) * 0.5)
    );
    %this-->Cursor.position = getWords(%selectedPos, 0, 1);
-   error(%this-->Cursor.position);
 }
 
 function InGameMenuGui::setSelected(%this, %index) {
@@ -89,5 +97,6 @@ function InGameMenuGui::onEvtAdvance(%this) {
 }
 
 function InGameMenuButton::onMouseEnter(%this) {
+   error(hi);
    InGameMenuGui.setSelected(InGameMenuGui-->Buttons.getObjectIndex(%this));
 }
