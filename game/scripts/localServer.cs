@@ -16,9 +16,10 @@ function LocalServer::onEvtSelectLevel(%this, %level) {
 
 function LocalServer::onEvtStartGame(%this) {
    // TODO: move this logic.
-   Levels.loadLevel(%this.chosenLevel);
-   NetClient.connectTo(self);
-   GuiEvents.postEvent(EvtStartLoading);
+   if (Levels.loadLevel(%this.selectedLevel)) {
+      NetClient.connectTo(self);
+      GuiEvents.postEvent(EvtStartLoading);
+   }
 }
 
 function LocalServer::onEvtLevelRegistered(%this, %level) {

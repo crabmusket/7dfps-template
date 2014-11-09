@@ -3,6 +3,7 @@ new ScriptMsgListener(Levels) {
    // can make use of. The array contains key-value pairs of level title, and
    // level info object. No two level scan have the same title.
    levels = new ArrayObject();
+   current = 0;
 };
 
 new EventManager(LevelEvents) {
@@ -17,16 +18,25 @@ function Levels::getLevel(%this, %title) {
 
 function Levels::loadLevel(%this, %title) {
    %this.destroyLevel();
-   %levelInfo = %this.levels.getValue(%title);
+   %levelInfo = %this.getLevel(%title);
    if (isObject(%levelInfo)) {
       exec(%levelInfo.file);
       new SimGroup(MissionCleanup);
       LevelEvents.postEvent(EvtLevelLoaded);
+      if (%levelInfo.object.isMethod(onLoad)) {
+         %levelInfo.object.onLoad();
+      }
+      %this.current = %levelInfo;
+      return %levelInfo;
    }
+   return 0;
 }
 
 GameEvents.subscribe(Levels, EvtExit);
 function Levels::onEvtExit(%this) {
+   if (%this.current.object.isMethod(onDestroy)) {
+      %this.current.object.onDestroy();
+   }
    %this.destroyLevel();
 }
 
@@ -48,12 +58,19 @@ function Levels::onEvtStart(%this, %args) {
    for (%f = findFirstFile(%pattern); %f !$= ""; %f = findNextFile()) {
       // Extract the level info from the file and register it in our 'database'.
       %levelInfo = %this.getLevelInfo(%f);
+
       if (%levelInfo != 0) {
          // We assume image files will be named identically to the level files
          // they go with.
          %levelInfo.image = filePath(%f) @ "/" @ fileBase(%f);
          %levelInfo.file = %f;
          %this.register(%levelInfo);
+
+         // And load the script associated with the level.
+         %levelFile = filePath(%f) @ "/main.cs";
+         if (isFile(%levelFile)) {
+            exec(%levelFile);
+         }
       }
    }
 }
@@ -91,7 +108,6 @@ function Levels::getLevelInfo(%this, %filename) {
             %levelInfoStr = %levelInfoStr SPC %line;
             break;
          }
-
          if (%inInfoBlock) {
             %levelInfoStr = %levelInfoStr SPC %line;
          }
@@ -102,15 +118,16 @@ function Levels::getLevelInfo(%this, %filename) {
    %file.delete();
 
    if (%levelInfoStr !$= "") {
+      // Eval the string we read from the file to actually create the object.
+      // We'll keep it around for getting properties. However, we must clear
+      // its name, because it will be redeclared when we actually create the
+      // mission.
       %levelInfoStr = "%levelInfoObj = " @ %levelInfoStr;
       eval(%levelInfoStr);
-      %obj = new ScriptObject() {
-         levelName = %levelInfoObj.levelName;
-         description = %levelInfoObj.description;
-         sortOrder = %levelInfoObj.sortOrder;
-      };
-      %levelInfoObj.delete();
-      return %obj;
+      // Save the name for later.
+      %levelInfoObj.object = %levelInfoObj.name;
+      %levelInfoObj.name = "";
+      return %levelInfoObj;
    }
 
    // Didn't find a LevelInfo :(.
