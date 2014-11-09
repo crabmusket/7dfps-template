@@ -143,9 +143,26 @@ function ClientState::enterInGame(%this) {
    Canvas.setContent(GameViewGui);
 }
 
+function clientCmdEnterObserving(%this) {
+   MenuActionMap.push();
+   HUD.visible = false;
+}
+
+function clientCmdEnterPlaying(%this) {
+   MenuActionMap.pop();
+   CharacterMap.push();
+   HUD.visible = true;
+}
+
+function clientCmdOnDeath(%this) {
+   CharacterMap.pop();
+}
+
 function ClientState::enterInGameMenu(%this) {
    Canvas.pushDialog(InGameMenuGui);
    InGameMap.pop();
+   CharacterMap.pop();
+   //VehicleMap.pop();
    MenuActionMap.push();
 }
 

@@ -11,6 +11,7 @@ new EventManager(LevelEvents) {
 };
 LevelEvents.registerEvent(EvtLevelRegistered);
 LevelEvents.registerEvent(EvtLevelLoaded);
+LevelEvents.registerEvent(EvtSpawn);
 
 function Levels::getLevel(%this, %title) {
    return %this.levels.getValue(%this.levels.getIndexFromKey(%title));
@@ -23,24 +24,25 @@ function Levels::loadLevel(%this, %title) {
       exec(%levelInfo.file);
       new SimGroup(MissionCleanup);
       LevelEvents.postEvent(EvtLevelLoaded);
-      if (%levelInfo.object.isMethod(onLoad)) {
-         %levelInfo.object.onLoad();
+      if (%levelInfo.info.isMethod(onLoad)) {
+         %levelInfo.info.onLoad();
       }
       %this.current = %levelInfo;
       return %levelInfo;
+   } else {
+      return 0;
    }
-   return 0;
 }
 
 GameEvents.subscribe(Levels, EvtExit);
 function Levels::onEvtExit(%this) {
-   if (%this.current.object.isMethod(onDestroy)) {
-      %this.current.object.onDestroy();
-   }
    %this.destroyLevel();
 }
 
 function Levels::destroyLevel(%this) {
+   if (isObject(%this.current) && %this.current.info.isMethod(onDestroy)) {
+      %this.current.info.onDestroy();
+   }
    if (isObject(MissionGroup)) {
       MissionGroup.delete();
    }
@@ -126,7 +128,7 @@ function Levels::getLevelInfo(%this, %filename) {
       %levelInfoStr = "%levelInfoObj = " @ %levelInfoStr;
       eval(%levelInfoStr);
       // Save the name for later.
-      %levelInfoObj.object = %levelInfoObj.name;
+      %levelInfoObj.info = %levelInfoObj.name;
       %levelInfoObj.name = "";
       return %levelInfoObj;
    }

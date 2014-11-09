@@ -22,6 +22,22 @@ new SimGroup(MissionGroup) {
          levelName = "Training Ground";
          sortOrder = "0";
    };
+   new SpawnSphere() {
+      autoSpawn = "0";
+      spawnTransform = "0";
+      radius = "100";
+      sphereWeight = "100";
+      indoorWeight = "100";
+      outdoorWeight = "100";
+      isAIControlled = "0";
+      dataBlock = "SpawnSphereMarker";
+      position = "1.70239e-009 -1.01193 0.2";
+      rotation = "0 0 1 151.657";
+      scale = "1 1 1";
+      internalName = "TheSpawnPoint";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
    new Sun(TheSun) {
       azimuth = "0";
       elevation = "35";
@@ -241,8 +257,8 @@ new SimGroup(MissionGroup) {
          playAmbient = "1";
          meshCulling = "0";
          originSort = "0";
-         collisionType = "Collision Mesh";
-         decalType = "Collision Mesh";
+         collisionType = "Visible Mesh";
+         decalType = "Visible Mesh";
          allowPlayerStep = "1";
          renderNormals = "0";
          forceDetail = "-1";
