@@ -36,25 +36,25 @@ InGameMap.bind(keyboard, f11, toggleEditor);
 // Gamepad controls
 function InGameMap::gpYaw(%this, %amount) {
    if (%amount > 0) {
-      $mvYawLeftSpeed = %amount;
+      $mvYawLeftSpeed = %amount * 0.25;
       $mvYawRightSpeed = 0;
    } else {
-      $mvYawLeftSpeed = %amount;
+      $mvYawLeftSpeed = %amount * 0.25;
       $mvYawRightSpeed = 0;
    }
 }
 
 function InGameMap::gpPitch(%this, %amount) {
    if (%amount > 0) {
-      $mvPitchDownSpeed = %amount;
+      $mvPitchDownSpeed = %amount * 0.25;
       $mvPitchUpSpeed = 0;
    } else {
-      $mvPitchDownSpeed = %amount;
+      $mvPitchDownSpeed = %amount * 0.25;
       $mvPitchUpSpeed = 0;
    }
 }
 
-InGameMap.bind(gamepad, thumbrx, "D", "-0.23 0.23", gpYaw);
-InGameMap.bind(gamepad, thumbry, "D", "-0.23 0.23", gpPitch);
+InGameMap.bindObj(gamepad, thumbrx, "D", "-0.23 0.23", gpYaw, InGameMap);
+InGameMap.bindObj(gamepad, thumbry, "D", "-0.23 0.23", gpPitch, InGameMap);
 InGameMap.bind(gamepad, thumblx, "D", "-0.23 0.23", setGlobal(mvRightAction));
 InGameMap.bind(gamepad, thumbly, "D", "-0.23 0.23", setGlobal(mvForwardAction));

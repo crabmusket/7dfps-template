@@ -41,7 +41,7 @@ function MenuActionMap::directionLatchLX(%this, %val) {
 
    if (%val < -%this.latchUpper && %this.latchLX == false) {
       %this.latchLX = true;
-      InputEvents.postEvent(EvtBack);
+      InputEvents.postEvent(EvtBackwards);
    }
 
    if (%val > -%this.latchLower && %val < %this.latchLower && %this.latchLX == true) {
