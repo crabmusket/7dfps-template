@@ -8,6 +8,7 @@ exec("art/abstract/materials.cs");
 exec("art/structures/materials.cs");
 exec("art/characters/materials.cs");
 exec("art/weapons/machinegun/materials.cs");
+exec("art/weapons/pistol/materials.cs");
 
 // Datablocks and associated scripts.
 exec("scripts/server/connection.cs");
