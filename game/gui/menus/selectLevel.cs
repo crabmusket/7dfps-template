@@ -210,3 +210,6 @@ function LevelListButton::onMouseEnter(%this) {
 function PlayButton::onMouseEnter(%this) {
    SelectLevelGui.cursorToPlayButton();
 }
+function PlayButton::onClick(%this) {
+   InputEvents.setInputMethod(keyboard);
+}

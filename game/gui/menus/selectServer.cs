@@ -151,3 +151,6 @@ function SelectLevelGui::onEvtPrev(%this) {
 function JoinButton::onMouseEnter(%this) {
    SelectServerGui.cursorToJoinButton();
 }
+function JoinButton::onClick(%this) {
+   InputEvents.setInputMethod(keyboard);
+}
