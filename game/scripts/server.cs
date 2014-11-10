@@ -18,8 +18,6 @@ exec("scripts/server/characters/players.cs");
 exec("scripts/server/characters/enemies.cs");
 
 new ScriptMsgListener(ServerState) {
-   superclass = StateMachine;
-   state = null;
 };
 
 GameEvents.subscribe(ServerState, EvtExit);
