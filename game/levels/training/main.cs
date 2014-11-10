@@ -1,15 +1,7 @@
 function TrainingLevel::onLoad(%this) {
-   LevelEvents.subscribe(%this, EvtLevelLoaded);
    LevelEvents.subscribe(%this, EvtSpawn);
    NetServerEvents.subscribe(%this, EvtClientEnterGame);
-}
 
-function TrainingLevel::onDestroy(%this) {
-   LevelEvents.removeAll(%this);
-   NetServerEvents.removeAll(%this);
-}
-
-function TrainingLevel::onEvtLevelLoaded(%this) {
    %this.state = new ScriptMsgListener() {
       class = StateMachine;
       state = null;
@@ -17,6 +9,20 @@ function TrainingLevel::onEvtLevelLoaded(%this) {
    };
 
    %this.state.onEvent(load);
+
+   // Spawn villains
+   foreach (%spawn in MissionGroup-->EnemySpawns) {
+      %enemy = new AIPlayer() {
+         datablock = EnemySoldier;
+      };
+      %enemy.setTransform(%spawn.getTransform());
+      MissionCleanup.add(%enemy);
+   }
+}
+
+function TrainingLevel::onDestroy(%this) {
+   LevelEvents.removeAll(%this);
+   NetServerEvents.removeAll(%this);
 }
 
 function TrainingLevel::onEvtClientEnterGame(%this, %client) {

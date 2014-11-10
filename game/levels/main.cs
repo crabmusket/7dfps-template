@@ -23,10 +23,10 @@ function Levels::loadLevel(%this, %title) {
    if (isObject(%levelInfo)) {
       exec(%levelInfo.file);
       new SimGroup(MissionCleanup);
-      LevelEvents.postEvent(EvtLevelLoaded);
       if (%levelInfo.info.isMethod(onLoad)) {
          %levelInfo.info.onLoad();
       }
+      LevelEvents.postEvent(EvtLevelLoaded);
       %this.current = %levelInfo;
       return %levelInfo;
    } else {

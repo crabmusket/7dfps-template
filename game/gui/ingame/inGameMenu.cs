@@ -97,6 +97,5 @@ function InGameMenuGui::onEvtAdvance(%this) {
 }
 
 function InGameMenuButton::onMouseEnter(%this) {
-   error(hi);
    InGameMenuGui.setSelected(InGameMenuGui-->Buttons.getObjectIndex(%this));
 }

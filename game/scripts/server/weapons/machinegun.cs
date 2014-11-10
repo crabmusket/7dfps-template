@@ -17,10 +17,10 @@ datablock ShapeBaseImageData(MachineGunImage) {
    stateTransitionOnTriggerDown[%i] = "fire";
 
    stateName[%i++] = "fire";
-   stateFire[1] = true;
-   stateScript[1] = "onFire";
-   stateTimeoutValue[1] = 0.1;
-   stateTransitionOnTimeout[1] = "fire";
+   stateFire[%i] = true;
+   stateScript[%i] = "onFire";
+   stateTimeoutValue[%i] = 0.1;
+   stateTransitionOnTimeout[%i] = "fire";
 };
 
 datablock ItemData(MachineGunItem) {

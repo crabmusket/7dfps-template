@@ -155,7 +155,7 @@ new SimGroup(MissionGroup) {
          representedInLightmap = "0";
          shadowDarkenColor = "0 0 0 -1";
          includeLightmappedGeometryInShadow = "0";
-         position = "10.4708 -17.2564 2.31288";
+         position = "10.4708 -17.2564 2.16137";
          rotation = "1 0 0 0";
          canSave = "1";
          canSaveDynamicFields = "1";
@@ -184,7 +184,7 @@ new SimGroup(MissionGroup) {
          representedInLightmap = "0";
          shadowDarkenColor = "0 0 0 -1";
          includeLightmappedGeometryInShadow = "0";
-         position = "1.25149 -11.7226 2.51773";
+         position = "1.18482 -11.859 2.13067";
          rotation = "1 0 0 0";
          canSave = "1";
          canSaveDynamicFields = "1";
@@ -279,6 +279,113 @@ new SimGroup(MissionGroup) {
       scale = "1 1 1";
       canSave = "1";
       canSaveDynamicFields = "1";
+   };
+   new Item() {
+      static = "1";
+      rotate = "0";
+      isAIControlled = "0";
+      dataBlock = "PistolItem";
+      position = "2.00731 -12.9282 -0.0118361";
+      rotation = "0 0 1 72.7321";
+      scale = "1 1 1";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new SimGroup() {
+      internalName = "EnemySpawns";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+
+      new SpawnSphere() {
+         autoSpawn = "0";
+         spawnTransform = "0";
+         radius = "100";
+         sphereWeight = "100";
+         indoorWeight = "100";
+         outdoorWeight = "100";
+         isAIControlled = "0";
+         dataBlock = "SpawnSphereMarker";
+         position = "20.5575 -6.53582 0.2";
+         rotation = "0 0 1 15.4453";
+         scale = "1 1 1";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+      };
+      new SpawnSphere() {
+         autoSpawn = "0";
+         spawnTransform = "0";
+         radius = "100";
+         sphereWeight = "100";
+         indoorWeight = "100";
+         outdoorWeight = "100";
+         isAIControlled = "0";
+         dataBlock = "SpawnSphereMarker";
+         position = "24.5582 6.95033 0.2";
+         rotation = "0 0 -1 85.2231";
+         scale = "1 1 1";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+      };
+      new SpawnSphere() {
+         autoSpawn = "0";
+         spawnTransform = "0";
+         radius = "100";
+         sphereWeight = "100";
+         indoorWeight = "100";
+         outdoorWeight = "100";
+         isAIControlled = "0";
+         dataBlock = "SpawnSphereMarker";
+         position = "10.4603 13.6833 0.2";
+         rotation = "0 0 -1 85.2231";
+         scale = "1 1 1";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+      };
+      new SpawnSphere() {
+         autoSpawn = "0";
+         spawnTransform = "0";
+         radius = "100";
+         sphereWeight = "100";
+         indoorWeight = "100";
+         outdoorWeight = "100";
+         isAIControlled = "0";
+         dataBlock = "SpawnSphereMarker";
+         position = "-21.0141 13.1011 0.2";
+         rotation = "0 0 1 92.0839";
+         scale = "1 1 1";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+      };
+      new SpawnSphere() {
+         autoSpawn = "0";
+         spawnTransform = "0";
+         radius = "100";
+         sphereWeight = "100";
+         indoorWeight = "100";
+         outdoorWeight = "100";
+         isAIControlled = "0";
+         dataBlock = "SpawnSphereMarker";
+         position = "6.84401 -3.55085 0.2";
+         rotation = "0 0 1 86.3922";
+         scale = "1 1 1";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+      };
+      new SpawnSphere() {
+         autoSpawn = "0";
+         spawnTransform = "0";
+         radius = "100";
+         sphereWeight = "100";
+         indoorWeight = "100";
+         outdoorWeight = "100";
+         isAIControlled = "0";
+         dataBlock = "SpawnSphereMarker";
+         position = "7.58532 -7.21468 0.2";
+         rotation = "0 0 1 66.6556";
+         scale = "1 1 1";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+      };
    };
 };
 //--- OBJECT WRITE END ---
