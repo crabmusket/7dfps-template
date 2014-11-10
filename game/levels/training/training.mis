@@ -24,8 +24,8 @@ new SimGroup(MissionGroup) {
    };
    new SpawnSphere() {
       autoSpawn = "0";
-      spawnTransform = "0";
-      radius = "100";
+      spawnTransform = true;
+      radius = 1;
       sphereWeight = "100";
       indoorWeight = "100";
       outdoorWeight = "100";
@@ -291,15 +291,14 @@ new SimGroup(MissionGroup) {
       canSave = "1";
       canSaveDynamicFields = "1";
    };
-   new SimGroup() {
-      internalName = "EnemySpawns";
+   new SimGroup(EnemySpawns) {
       canSave = "1";
       canSaveDynamicFields = "1";
 
       new SpawnSphere() {
          autoSpawn = "0";
-         spawnTransform = "0";
-         radius = "100";
+         spawnTransform = true;
+         radius = 1;
          sphereWeight = "100";
          indoorWeight = "100";
          outdoorWeight = "100";
@@ -310,11 +309,13 @@ new SimGroup(MissionGroup) {
          scale = "1 1 1";
          canSave = "1";
          canSaveDynamicFields = "1";
+         spawnClass = AIPlayer;
+         spawnDataBlock = EnemySoldier;
       };
       new SpawnSphere() {
          autoSpawn = "0";
-         spawnTransform = "0";
-         radius = "100";
+         spawnTransform = true;
+         radius = 1;
          sphereWeight = "100";
          indoorWeight = "100";
          outdoorWeight = "100";
@@ -325,11 +326,13 @@ new SimGroup(MissionGroup) {
          scale = "1 1 1";
          canSave = "1";
          canSaveDynamicFields = "1";
+         spawnClass = AIPlayer;
+         spawnDataBlock = EnemySoldier;
       };
       new SpawnSphere() {
          autoSpawn = "0";
-         spawnTransform = "0";
-         radius = "100";
+         spawnTransform = true;
+         radius = 1;
          sphereWeight = "100";
          indoorWeight = "100";
          outdoorWeight = "100";
@@ -340,11 +343,13 @@ new SimGroup(MissionGroup) {
          scale = "1 1 1";
          canSave = "1";
          canSaveDynamicFields = "1";
+         spawnClass = AIPlayer;
+         spawnDataBlock = EnemySoldier;
       };
       new SpawnSphere() {
          autoSpawn = "0";
-         spawnTransform = "0";
-         radius = "100";
+         spawnTransform = true;
+         radius = 1;
          sphereWeight = "100";
          indoorWeight = "100";
          outdoorWeight = "100";
@@ -355,11 +360,13 @@ new SimGroup(MissionGroup) {
          scale = "1 1 1";
          canSave = "1";
          canSaveDynamicFields = "1";
+         spawnClass = AIPlayer;
+         spawnDataBlock = EnemySoldier;
       };
       new SpawnSphere() {
          autoSpawn = "0";
-         spawnTransform = "0";
-         radius = "100";
+         spawnTransform = true;
+         radius = 1;
          sphereWeight = "100";
          indoorWeight = "100";
          outdoorWeight = "100";
@@ -370,11 +377,13 @@ new SimGroup(MissionGroup) {
          scale = "1 1 1";
          canSave = "1";
          canSaveDynamicFields = "1";
+         spawnClass = AIPlayer;
+         spawnDataBlock = EnemySoldier;
       };
       new SpawnSphere() {
          autoSpawn = "0";
-         spawnTransform = "0";
-         radius = "100";
+         spawnTransform = true;
+         radius = 1;
          sphereWeight = "100";
          indoorWeight = "100";
          outdoorWeight = "100";
@@ -385,6 +394,8 @@ new SimGroup(MissionGroup) {
          scale = "1 1 1";
          canSave = "1";
          canSaveDynamicFields = "1";
+         spawnClass = AIPlayer;
+         spawnDataBlock = EnemySoldier;
       };
    };
 };

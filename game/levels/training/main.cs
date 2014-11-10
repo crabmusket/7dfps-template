@@ -11,13 +11,7 @@ function TrainingLevel::onLoad(%this) {
    %this.state.onEvent(load);
 
    // Spawn villains
-   foreach (%spawn in MissionGroup-->EnemySpawns) {
-      %enemy = new AIPlayer() {
-         datablock = EnemySoldier;
-      };
-      %enemy.setTransform(%spawn.getTransform());
-      MissionCleanup.add(%enemy);
-   }
+   EnemySpawns.callOnChildren(spawnObject);
 }
 
 function TrainingLevel::onDestroy(%this) {
