@@ -1,11 +1,7 @@
 %i = -1;
 datablock ShapeBaseImageData(MachineGunImage) {
    shapeFile = "art/weapons/machinegun/machinegun.dae";
-   eyeOffset = "0.5 0.5 -0.5";
-
-   shakeCamera = true;
-   camShakeFreq = "0.1 0.1 0.1";
-   camShakeAmp = "0.1 0.1 0.1";
+   mountPoint = 0;
 
    lightType = "WeaponFireLight";
    lightColor = "0.992126 0.968504 0.708661 1";
@@ -19,8 +15,13 @@ datablock ShapeBaseImageData(MachineGunImage) {
    stateName[%i++] = "fire";
    stateFire[%i] = true;
    stateScript[%i] = "onFire";
-   stateTimeoutValue[%i] = 0.1;
-   stateTransitionOnTimeout[%i] = "fire";
+   stateTimeoutValue[%i] = 0.05;
+   stateTransitionOnTimeout[%i] = "load";
+   stateTransitionOnTriggerUp[%i] = "ready";
+
+   stateName[%i++] = "load";
+   stateTransitionOnTriggerDown[%i] = "fire";
+   stateTransitionOnTriggerUp[%i] = "ready";
 };
 
 datablock ItemData(MachineGunItem) {
@@ -29,8 +30,9 @@ datablock ItemData(MachineGunItem) {
    shapeFile = "art/weapons/machinegun/machinegun.dae";
    image = MachineGunImage;
    elasticity = 0.05;
+   friction = 0.8;
    mass = 15;
-   type = "pickup";
+   type = "weapon";
    itemName = "machine gun";
 };
 

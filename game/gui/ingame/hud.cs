@@ -32,7 +32,7 @@ GameViewGui.add(new GuiControl(HUD) {
                profile = BlackTextProfile;
                position = "15 0";
                extent = "40 40";
-               text = "F";
+               text = "E";
             };
          };
       };

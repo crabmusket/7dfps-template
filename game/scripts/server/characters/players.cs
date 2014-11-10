@@ -8,6 +8,10 @@ datablock PlayerData(PlayerSoldier) {
 function PlayerSoldier::onAdd(%this, %obj) {
    // Start looking for items to interact with.
    %this.itemSearch(%obj);
+
+   // Start inventory management.
+   %obj.activeWeapon = 0;
+   %obj.inactiveWeapon = 0;
 }
 
 function PlayerSoldier::onRemove(%this, %obj) {
@@ -43,20 +47,83 @@ function PlayerSoldier::itemSearch(%this, %obj) {
    }
 }
 
+// Called when the player looks at an item. Here we must come up with a string
+// that describes the interaction we can have with the item we're looking at.
+// For example, the message for a closed door might be "open", whereas for a
+// weapon when we're already holding one, the message might be "swap for".
 function PlayerSoldier::getInteraction(%this, %obj, %item) {
    %db = %item.getDataBlock();
    switch$ (%db.type) {
-      case "pickup":
-         %empty = "pick up";
+      case "weapon":
+         %free = "pick up";
          %full = "swap for";
 
+      case "pickup":
+         %free = "pick up";
+         %full = "pick up";
+
       case "device":
-         %empty = "use";
+         %free = "use";
+         %full = "use";
+
+      default:
+         %free = "use";
          %full = "use";
    }
 
-   %msg = (%obj.getMountedImage(0) == 0 ? %empty : %full)
+   %msg = (!%obj.activeWeapon || !%obj.inactiveWeapon ? %free : %full)
       SPC %db.itemName;
 
    return %msg;
+}
+
+function PlayerSoldier::use(%this, %obj, %item) {
+   %db = %item.getDataBlock();
+   switch$ (%db.type) {
+      case "weapon":
+         if (%obj.activeWeapon && %obj.inactiveWeapon) {
+            %this.throwWeapon(%obj);
+         }
+
+         if (!%obj.activeWeapon) {
+            %obj.activeWeapon = %db;
+            %obj.mountImage(%db.image, 0);
+            %item.delete();
+         } else if (!%obj.inactiveWeapon) {
+            %obj.inactiveWeapon = %db;
+            %item.delete();
+         }
+
+      case "pickup":
+
+      default:
+         %item.use();
+   }
+}
+
+function PlayerSoldier::throwWeapon(%this, %obj) {
+   if (%obj.activeWeapon) {
+      %item = new Item() {
+         datablock = %obj.activeWeapon;
+         position = %obj.getEyePoint();
+         static = false;
+         rotate = false;
+      };
+      MissionCleanup.add(%item);
+      %item.setVelocity(VectorScale(%obj.getForwardVector(), 3));
+      %item.setCollisionTimeout(%obj);
+      %obj.activeWeapon = 0;
+      %obj.unmountImage(0);
+   }
+}
+
+function PlayerSoldier::swapWeapon(%this, %obj) {
+   %tmp = %obj.inactiveWeapon;
+   %obj.inactiveWeapon = %obj.activeWeapon;
+   %obj.activeWeapon = %tmp;
+   if (%obj.activeWeapon) {
+      %obj.mountImage(%obj.activeWeapon.image, 0);
+   } else {
+      %obj.unmountImage(0);
+   }
 }

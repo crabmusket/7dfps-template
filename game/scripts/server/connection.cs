@@ -3,6 +3,14 @@ function GameConnection::onConnectRequest(%this, %addr) {
    return "";
 }
 
+// When a new client enters the game, we'll set up all the objects used to handle
+// their time with us. The GameConnection is the actual network connection, and
+// is created automatically by the engine. In addition, we'll create a state machine
+// that will help us manage the different stages a connected player goes through,
+// and we'll also make them a camera.
+// We make the camera now because it's easy to do, and is probably always going
+// to be useful. In addition, unlike the Player object that this player will
+// control, it doesn't have a die/respawn cycle.
 function GameConnection::onEnterGame(%this) {
    %this.state = new ScriptMsgListener() {
       connection = %this;
@@ -80,4 +88,18 @@ function GameConnection::lookingAtItem(%this, %item) {
          commandToClient(%this, 'noInteraction');
       }
    }
+}
+
+function serverCmdUse(%this) {
+   if (%this.currentItem && %this.character) {
+      %this.character.getDataBlock().use(%this.character, %this.currentItem);
+   }
+}
+
+function serverCmdSwapWeapon(%this) {
+   %this.character.getDataBlock().swapWeapon(%this.character);
+}
+
+function serverCmdThrowWeapon(%this) {
+   %this.character.getDataBlock().throwWeapon(%this.character);
 }
