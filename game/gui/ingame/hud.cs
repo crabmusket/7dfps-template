@@ -11,17 +11,53 @@ GameViewGui.add(new GuiControl(HUD) {
       position = "-350 50";
       extent = "350 50";
 
-      new GuiBitmapCtrl([InteractionIcon]) {
-         visible = false;
+      new GuiControl([InteractionIcon]) {
+         position = "55 5";
+         extent = "40 40";
+
+         new GuiBitmapCtrl([Controller]) {
+            visible = false;
+            position = "5 5";
+            extent = "30 30";
+            bitmap = "gui/prompts/xbox360/360_X";
+         };
+
+         new GuiControl([KBM]) {
+            visible = false;
+            new GuiBitmapCtrl() {
+               extent = "40 40";
+               bitmap = "gui/prompts/kbm/blanks/Blank_White_Normal";
+            };
+            new GuiTextCtrl() {
+               profile = BlackTextProfile;
+               position = "15 0";
+               extent = "40 40";
+               text = "F";
+            };
+         };
       };
 
       new GuiTextCtrl([InteractionString]) {
          profile = SmallTitleProfile;
-         position = "50 10";
+         position = "100 10";
          extent = "300 30";
       };
    };
 });
+
+function HUD::onWake(%this) {
+   InputEvents.subscribe(%this, EvtChangeInputMethod);
+   %this.onEvtChangeInputMethod(InputEvents.inputMethod);
+}
+
+function HUD::onSleep(%this) {
+   InputEvents.removeAll(%this);
+}
+
+function HUD::onEvtChangeInputMethod(%this, %method) {
+   HUD-->Controller.visible = (%method $= gamepad);
+   HUD-->KBM.visible = (%method !$= gamepad);
+}
 
 HUD.Tweens = Twillex::create();
 HUD.Tweens.startUpdates();
@@ -29,7 +65,7 @@ HUD.Tweens.startUpdates();
 function clientCmdInteraction(%text) {
    HUD-->InteractionString.setText(%text);
    %textW = getWord(HUD-->InteractionString.extent, 0);
-   HUD-->Interaction.extent = 100 + %textW SPC 50;
+   HUD-->Interaction.extent = 120 + %textW SPC 50;
    HUD.Tweens.toOnce(200, HUD-->Interaction, "position: 0 50", "ease:sine_out");
 }
 

@@ -8,9 +8,15 @@ new GuiControlProfile(TextProfile : GuiDefaultProfile) {
    fontSize = 18;
    fontColor = "White";
    fontColorHL = "White";
-   fillColor = "Black";
-   fillColorHL = "Black";
+   fillColor = "0 0 0 0";
+   fillColorHL = "0 0 0 0";
    autoSizeWidth = true;
+   opaque = false;
+};
+
+new GuiControlProfile(BlackTextProfile : TextProfile) {
+   fontColor = "Black";
+   fontColorHL = "Black";
 };
 
 new GuiControlProfile(TitleProfile : TextProfile) {
