@@ -4,7 +4,7 @@ new GameTSCtrl(GameViewGui) {
    horizSizing = "right";
    vertSizing = "bottom";
    position = "0 0";
-   extent = "1024 768";
+   extent = "800 600";
    minExtent = "8 8";
    canSave = true;
    visible = true;

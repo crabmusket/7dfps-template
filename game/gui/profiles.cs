@@ -10,6 +10,7 @@ new GuiControlProfile(TextProfile : GuiDefaultProfile) {
    fontColorHL = "White";
    fillColor = "Black";
    fillColorHL = "Black";
+   autoSizeWidth = true;
 };
 
 new GuiControlProfile(TitleProfile : TextProfile) {
@@ -17,11 +18,11 @@ new GuiControlProfile(TitleProfile : TextProfile) {
    fontSize = 36;
 };
 
-new GuiControlProfile(LevelListProfile : TitleProfile) {
+new GuiControlProfile(SmallTitleProfile : TitleProfile) {
    fontSize = 26;
 };
 
-new GuiControlProfile(LevelListInvertedProfile : LevelListProfile) {
+new GuiControlProfile(SmallTitleProfileInverted : SmallTitleProfile) {
    fontColor = "Black";
    fontColorHL = "Black";
    fillColor = "White";

@@ -30,6 +30,8 @@ datablock ItemData(MachineGunItem) {
    image = MachineGunImage;
    elasticity = 0.05;
    mass = 15;
+   type = "pickup";
+   itemName = "machine gun";
 };
 
 datablock ProjectileData(MachineGunProjectile) {

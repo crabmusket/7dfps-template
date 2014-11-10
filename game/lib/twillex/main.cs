@@ -163,9 +163,9 @@ function Twillex::create(%name)
 {
    // no need to return it if you named it!
    if (%name !$= "")
-      new ScriptObject(%name) { class = Twillex; };
+      new ScriptTickObject(%name) { class = Twillex; };
    else
-      return new ScriptObject() { class = Twillex; };
+      return new ScriptTickObject() { class = Twillex; };
 }
 
 function Twillex::onAdd(%this)
@@ -528,6 +528,11 @@ function Twillex::startUpdates(%this, %millis)
 
    %this.onUpdate();
    %this.schedule(%millis, startUpdates);
+   %this.callOnAdvanceTime = true;
+}
+
+function Twillex::onAdvanceTime(%this) {
+   %this.onUpdate();
 }
 
 // ---------------------------------------------

@@ -84,7 +84,7 @@ function SelectServerGui::addServer(%this, %info) {
    %servers = %this-->Servers;
    %servers.add(new GuiButtonCtrl() {
       class = LevelListButton;
-      profile = LevelListProfile;
+      profile = SmallTitleProfile;
       text = %info;
       command = "GuiEvents.postEvent(EvtSelectServer, \""@%level.levelName@"\");";
       useMouseEvents = true;
@@ -99,9 +99,9 @@ function ServerListButton::onSleep(%this) {
 }
 function ServerListButton::onEvtSelectLevel(%this, %title) {
    if (%this.text $= %title) {
-      %this.profile = LevelListInvertedProfile;
+      %this.profile = SmallTitleProfileInverted;
    } else {
-      %this.profile = LevelListProfile;
+      %this.profile = SmallTitleProfile;
    }
 }
 function ServerListButton::onMouseEnter(%this) {

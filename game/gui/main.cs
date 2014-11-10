@@ -20,3 +20,4 @@ exec("./menus/selectServer.cs");
 exec("./menus/loading.cs");
 exec("./ingame/gameView.cs");
 exec("./ingame/inGameMenu.cs");
+exec("./ingame/hud.cs");

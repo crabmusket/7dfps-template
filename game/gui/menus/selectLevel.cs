@@ -182,7 +182,7 @@ function SelectLevelGui::addLevel(%this, %level) {
    %levels = %this-->Levels;
    %levels.add(new GuiButtonCtrl() {
       class = LevelListButton;
-      profile = LevelListProfile;
+      profile = SmallTitleProfile;
       text = %level.levelName;
       command = "GuiEvents.postEvent(EvtSelectLevel, \""@%level.levelName@"\");";
       useMouseEvents = true;
@@ -198,9 +198,9 @@ function LevelListButton::onSleep(%this) {
 }
 function LevelListButton::onEvtSelectLevel(%this, %title) {
    if (%this.text $= %title) {
-      %this.profile = LevelListInvertedProfile;
+      %this.profile = SmallTitleProfileInverted;
    } else {
-      %this.profile = LevelListProfile;
+      %this.profile = SmallTitleProfile;
    }
 }
 function LevelListButton::onMouseEnter(%this) {
