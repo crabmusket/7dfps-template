@@ -73,6 +73,9 @@ CharacterMap.bind(gamepad, thumbly, "D", "-0.23 0.23", setGlobal(mvForwardAction
 CharacterMap.bindCmd(keyboard, space, "$mvTriggerCount2++;", "$mvTriggerCount2++;");
 CharacterMap.bindCmd(gamepad, btn_a, "$mvTriggerCount2++;", "$mvTriggerCount2++;");
 
+CharacterMap.bindCmd(keyboard, lcontrol, "$mvTriggerCount3++;", "");
+CharacterMap.bindCmd(gamepad, btn_rt, "$mvTriggerCount3++;", "");
+
 /*
 function doCrouch(%val)
 {
