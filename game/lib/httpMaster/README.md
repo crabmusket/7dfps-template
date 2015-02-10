@@ -20,6 +20,12 @@ You can call `query` with a single parameter, which will cause the function with
     }
     HTTPMaster.query(getResults);
 
+Or equivalently, use an anonymous function:
+
+    HTTPMaster.query(function (%query) {
+       echo(%query.contents);
+    });
+
 Second, you can call `query` with an object and a method name:
 
     new ScriptObject(CallbackReceiver);
